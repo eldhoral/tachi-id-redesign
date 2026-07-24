@@ -41,19 +41,19 @@ const SOCIALS = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-navy text-navy-foreground">
+    <footer className="border-t border-border bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <Logo tone="light" />
-            <p className="mt-5 max-w-xs leading-relaxed text-white/60">
+            <Logo tone="brand" />
+            <p className="mt-5 max-w-xs leading-relaxed text-muted-foreground">
               Perusahaan holding modern yang memperkuat rantai nilai bisnis di
               seluruh Indonesia. Stronger Together.
             </p>
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-white/70">
+            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
               Navigasi
             </h3>
             <ul className="mt-5 space-y-3">
@@ -61,7 +61,7 @@ export function SiteFooter() {
                 <li key={n.href}>
                   <a
                     href={n.href}
-                    className="text-white/70 transition-colors hover:text-white"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {n.label}
                   </a>
@@ -71,13 +71,13 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-white/70">
+            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
               Terhubung Dengan Kami
             </h3>
-            <p className="mt-5 leading-relaxed text-white/70">
+            <p className="mt-5 leading-relaxed text-muted-foreground">
               tantrahachigroup@tachi.id
             </p>
-            <p className="mt-1 leading-relaxed text-white/70">
+            <p className="mt-1 leading-relaxed text-muted-foreground">
               +62 811 1184 0091
             </p>
             <div className="mt-5 flex gap-3">
@@ -86,7 +86,7 @@ export function SiteFooter() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
                 >
                   <s.icon className="h-4 w-4" />
                 </a>
@@ -95,7 +95,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 text-center text-sm text-white/50">
+        <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
           Copyright &copy; {new Date().getFullYear()} Tachi Group. All Rights
           Reserved.
         </div>

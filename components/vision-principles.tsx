@@ -40,7 +40,7 @@ export function VisionPrinciples() {
     <section className="bg-background py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Vision */}
-        <div className="relative overflow-hidden rounded-3xl bg-navy px-8 py-14 text-navy-foreground sm:px-14">
+        <div className="relative overflow-hidden rounded-3xl border border-primary/10 bg-primary/5 px-8 py-14 text-foreground sm:px-14">
           <div
             className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-primary/30 blur-3xl"
             aria-hidden="true"
@@ -48,13 +48,13 @@ export function VisionPrinciples() {
           <div className="relative max-w-3xl">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/20">
-                <Target className="h-6 w-6 text-white" />
+                <Target className="h-6 w-6 text-primary" />
               </span>
-              <span className="text-sm font-semibold uppercase tracking-wider text-white/70">
+              <span className="text-sm font-semibold uppercase tracking-wider text-primary">
                 Visi Kami
               </span>
             </div>
-            <p className="mt-6 font-display text-2xl font-semibold leading-snug tracking-tight text-white text-balance sm:text-3xl">
+            <p className="mt-6 font-display text-2xl font-semibold leading-snug tracking-tight text-foreground text-balance sm:text-3xl">
               Menjadi perusahaan holding group nasional yang unggul, inovatif,
               dan berkelanjutan dengan jaringan distribusi terintegrasi di
               seluruh Indonesia.
