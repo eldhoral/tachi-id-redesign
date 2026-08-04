@@ -1,12 +1,20 @@
-import { Building, Package, Store, Factory, Ship, ShoppingBag } from 'lucide-react'
+import Image from 'next/image'
 
-const PARTNERS = [
-  { name: 'Retail & Distribusi', icon: Store },
-  { name: 'Manufaktur', icon: Factory },
-  { name: 'E-Commerce', icon: ShoppingBag },
-  { name: 'Ekspor & Impor', icon: Ship },
-  { name: 'Korporat', icon: Building },
-  { name: 'FMCG', icon: Package },
+const CLIENTS = [
+  { name: 'DIM Cargo', src: '/clients/dim-cargo.jpg' },
+  { name: 'Samudra', src: '/clients/samudra.jpg' },
+  { name: 'Klien Tachi Group', src: '/clients/klien-02.jpg' },
+  { name: 'Infinith', src: '/clients/infinith.png' },
+  { name: 'PT Panca Traktor Indonesia', src: '/clients/panca-traktor.jpg' },
+  { name: 'Marui', src: '/clients/marui.jpg' },
+  { name: 'KBN', src: '/clients/kbn.jpg' },
+  { name: 'Mayora', src: '/clients/mayora.jpg' },
+  { name: 'Pertamina', src: '/clients/pertamina.jpg' },
+  { name: 'Siemens', src: '/clients/siemens.jpg' },
+  { name: 'Indorama', src: '/clients/indorama.jpg' },
+  { name: 'Samudera', src: '/clients/samudera.jpg' },
+  { name: 'WOOK!', src: '/clients/wook.jpg' },
+  { name: 'Hitachi', src: '/clients/hitachi.jpg' },
 ]
 
 export function Clients() {
@@ -26,16 +34,19 @@ export function Clients() {
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {PARTNERS.map((p) => (
+        <div className="mt-14 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+          {CLIENTS.map((c) => (
             <div
-              key={p.name}
-              className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-card px-4 py-8 text-center transition-colors hover:border-primary/40"
+              key={c.src}
+              className="flex items-center justify-center rounded-2xl border border-border bg-card p-8 transition-colors hover:border-primary/40"
             >
-              <p.icon className="h-8 w-8 text-primary" />
-              <span className="text-sm font-medium text-foreground text-pretty">
-                {p.name}
-              </span>
+              <Image
+                src={c.src}
+                alt={c.name}
+                width={320}
+                height={160}
+                className="h-28 w-full object-contain"
+              />
             </div>
           ))}
         </div>

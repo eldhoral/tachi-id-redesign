@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { MapPin, Phone, Mail, Send, Check } from 'lucide-react'
+import { MapPin, Phone, Mail, Send } from 'lucide-react'
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
 
 const CONTACT_INFO = [
   {
@@ -25,13 +25,16 @@ const CONTACT_INFO = [
 ]
 
 export function Contact() {
-  const [sent, setSent] = useState(false)
-
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSent(true)
-    e.currentTarget.reset()
-    setTimeout(() => setSent(false), 4000)
+    const f = new FormData(e.currentTarget)
+    const url = buildWhatsAppUrl({
+      name: String(f.get('name') ?? ''),
+      email: String(f.get('email') ?? ''),
+      subject: String(f.get('subject') ?? ''),
+      message: String(f.get('message') ?? ''),
+    })
+    window.open(url, '_blank', 'noopener')
   }
 
   return (
@@ -125,18 +128,12 @@ export function Contact() {
                 type="submit"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.01] disabled:opacity-70"
               >
-                {sent ? (
-                  <>
-                    <Check className="h-4 w-4" />
-                    Pesan Terkirim
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4" />
-                    Kirim Pesan
-                  </>
-                )}
+                <Send className="h-4 w-4" />
+                Kirim via WhatsApp
               </button>
+              <p className="text-center text-sm text-muted-foreground">
+                Pesan Anda akan dibuka di WhatsApp untuk dikirim ke tim kami.
+              </p>
             </form>
           </div>
         </div>

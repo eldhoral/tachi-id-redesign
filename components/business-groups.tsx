@@ -1,29 +1,7 @@
 import Image from 'next/image'
-import { Truck, Megaphone, UtensilsCrossed, ArrowUpRight } from 'lucide-react'
-
-const GROUPS = [
-  {
-    name: 'Tachi Logistics',
-    icon: Truck,
-    image: '/business-logistics.png',
-    soon: false,
-    text: 'Menghadirkan solusi distribusi dan pengiriman terintegrasi dengan standar korporat modern. Kami berkomitmen memberikan layanan tepat waktu, efisien, dan terpercaya untuk mendukung kelancaran rantai pasok bisnis di seluruh Indonesia.',
-  },
-  {
-    name: 'Tachi Ads',
-    icon: Megaphone,
-    image: '/business-ads.png',
-    soon: false,
-    text: 'Lini bisnis kreatif yang berfokus pada strategi komunikasi, branding, dan digital marketing. Kami membantu merek tumbuh melalui ide yang berdampak dan eksekusi visual yang kuat, menciptakan hubungan bermakna antara brand dan audiensnya.',
-  },
-  {
-    name: 'Tachi Foodworks',
-    icon: UtensilsCrossed,
-    image: '/business-food.png',
-    soon: true,
-    text: 'Lini bisnis Food & Beverage yang tengah kami siapkan untuk menghadirkan produk dan pengalaman kuliner berkualitas. Nantikan kehadiran kami dengan standar rasa dan layanan terbaik.',
-  },
-]
+import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
+import { GROUPS } from '@/lib/business-groups'
 
 export function BusinessGroups() {
   return (
@@ -45,8 +23,8 @@ export function BusinessGroups() {
         <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
           {GROUPS.map((g) => (
             <article
-              key={g.name}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10"
+              key={g.slug}
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
@@ -68,7 +46,13 @@ export function BusinessGroups() {
               </div>
               <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-xl font-bold text-foreground">
-                  {g.name}
+                  {/* ponytail: stretched link — title, CTA, and whole card share one <a> */}
+                  <Link
+                    href={`/bisnis/${g.slug}`}
+                    className="transition-colors after:absolute after:inset-0 hover:text-primary"
+                  >
+                    {g.name}
+                  </Link>
                 </h3>
                 <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">
                   {g.text}
