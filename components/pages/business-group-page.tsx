@@ -24,15 +24,17 @@ export function BusinessGroupPage({
     <div lang={dict.htmlLang}>
       <SiteHeader locale={locale} />
       <main>
-        <section className="relative isolate flex min-h-[60vh] items-end overflow-hidden pb-16 pt-32">
-          <Image
-            src={group.image}
-            alt={group.name}
-            fill
-            priority
-            sizes="100vw"
-            className="-z-10 object-cover"
-          />
+        <section className="relative isolate flex min-h-[60vh] items-end overflow-hidden bg-navy pb-16 pt-32">
+          {group.image && (
+            <Image
+              src={group.image}
+              alt={group.name}
+              fill
+              priority
+              sizes="100vw"
+              className="-z-10 object-cover"
+            />
+          )}
           <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy via-navy/80 to-navy/40" />
           <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
             <Link
