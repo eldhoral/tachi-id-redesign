@@ -1,4 +1,4 @@
-import { Truck, Megaphone, UtensilsCrossed } from 'lucide-react'
+import { Truck, Megaphone, UtensilsCrossed, Car } from 'lucide-react'
 import type { Locale } from '@/lib/i18n'
 
 type Copy = {
@@ -13,7 +13,9 @@ type Group = {
   name: string
   tagline: string
   icon: typeof Truck
-  image: string
+  /** null until a real photo exists — the UI falls back to a branded block
+   *  rather than a stock image that misrepresents the business. */
+  image: string | null
   soon: boolean
   copy: Record<Locale, Copy>
 }
@@ -211,6 +213,88 @@ export const GROUPS: Group[] = [
     },
   },
   {
+    slug: 'garage',
+    name: 'Tachi Garage',
+    tagline: 'Drive Away Confident',
+    icon: Car,
+    image: null,
+    soon: false,
+    copy: {
+      id: {
+        text: 'Lini bisnis penjualan mobil bekas berkualitas untuk kebutuhan harian — mulai dari SUV, MPV, hingga sedan. Setiap unit kami siapkan agar siap pakai, dengan proses jual beli yang transparan dan tanpa repot.',
+        reasons: [
+          {
+            title: 'Unit Terperiksa',
+            text: 'Setiap mobil melalui pemeriksaan menyeluruh sebelum ditawarkan.',
+          },
+          {
+            title: 'Riwayat Transparan',
+            text: 'Kondisi kendaraan dan kelengkapan dokumen kami sampaikan apa adanya.',
+          },
+          {
+            title: 'Harga Wajar',
+            text: 'Penawaran mengikuti kondisi pasar, tanpa biaya tersembunyi.',
+          },
+        ],
+        services: [
+          {
+            title: 'SUV',
+            text: 'Kendaraan tangguh dengan kabin lega untuk keluarga dan perjalanan jauh.',
+          },
+          {
+            title: 'MPV',
+            text: 'Pilihan populer keluarga Indonesia dengan kapasitas penumpang lebih banyak.',
+          },
+          {
+            title: 'Sedan',
+            text: 'Berkendara nyaman dan efisien untuk kebutuhan harian di perkotaan.',
+          },
+          {
+            title: 'Hatchback & City Car',
+            text: 'Lincah dan hemat bahan bakar, cocok untuk lalu lintas padat.',
+          },
+        ],
+        cta: 'Cari mobil bekas yang tepat untuk Anda? Hubungi Tachi Garage sekarang.',
+      },
+      en: {
+        text: 'A business line selling quality used cars for everyday needs — from SUVs and MPVs through to sedans. Every unit is prepared to be road-ready, with a transparent, hassle-free buying process.',
+        reasons: [
+          {
+            title: 'Inspected Units',
+            text: 'Every car goes through a thorough inspection before it is offered.',
+          },
+          {
+            title: 'Transparent History',
+            text: "We are upfront about each vehicle's condition and paperwork.",
+          },
+          {
+            title: 'Fair Pricing',
+            text: 'Offers track the market, with no hidden charges.',
+          },
+        ],
+        services: [
+          {
+            title: 'SUV',
+            text: 'Capable vehicles with roomy cabins for families and longer journeys.',
+          },
+          {
+            title: 'MPV',
+            text: 'A popular choice for Indonesian families, with more passenger capacity.',
+          },
+          {
+            title: 'Sedan',
+            text: 'Comfortable, efficient driving for everyday use around town.',
+          },
+          {
+            title: 'Hatchback & City Car',
+            text: 'Nimble and fuel-efficient, suited to heavy traffic.',
+          },
+        ],
+        cta: 'Looking for the right used car? Get in touch with Tachi Garage today.',
+      },
+    },
+  },
+  {
     slug: 'foodworks',
     name: 'Tachi Foodworks',
     tagline: 'Coming Soon',
@@ -235,3 +319,7 @@ export const GROUPS: Group[] = [
 ]
 
 export const getGroup = (slug: string) => GROUPS.find((g) => g.slug === slug)
+
+/** Units without their own artwork share the generic company OG image. */
+export const groupOgImage = (group: Group) =>
+  group.image ? `/og/${group.slug}.jpg` : '/og/home.jpg'

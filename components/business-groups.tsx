@@ -22,20 +22,22 @@ export function BusinessGroups({ locale }: { locale: Locale }) {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-7 md:grid-cols-2">
           {GROUPS.map((g) => (
             <article
               key={g.slug}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10"
             >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
-                  src={g.image || '/placeholder.svg'}
-                  alt={g.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+              <div className="relative aspect-[16/10] overflow-hidden bg-navy">
+                {g.image && (
+                  <Image
+                    src={g.image}
+                    alt={g.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
                 <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-xl bg-background/90 backdrop-blur-sm">
                   <g.icon className="h-5 w-5 text-primary" />

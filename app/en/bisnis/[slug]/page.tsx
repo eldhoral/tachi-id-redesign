@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { BusinessGroupPage } from '@/components/pages/business-group-page'
-import { GROUPS, getGroup } from '@/lib/business-groups'
+import { GROUPS, getGroup, groupOgImage } from '@/lib/business-groups'
 
 export function generateStaticParams() {
   return GROUPS.map((g) => ({ slug: g.slug }))
@@ -17,7 +17,7 @@ export async function generateMetadata({
   const title = `${group.name} — Tachi Group`
   const description = group.copy.en.text
   const images = [
-    { url: `/og/${group.slug}.jpg`, width: 1200, height: 630, alt: group.name },
+    { url: groupOgImage(group), width: 1200, height: 630, alt: group.name },
   ]
   return {
     title,
