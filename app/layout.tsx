@@ -2,7 +2,36 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Manrope } from 'next/font/google'
 import { WhatsAppButton } from '@/components/whatsapp-button'
+import { ORG, SITE_URL } from '@/lib/site'
 import './globals.css'
+
+const ORGANIZATION_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: ORG.name,
+  legalName: ORG.legalName,
+  url: SITE_URL,
+  logo: `${SITE_URL}/tachi-group-logo-full.png`,
+  image: `${SITE_URL}/og/home.jpg`,
+  description:
+    'Perusahaan holding modern yang menaungi lini bisnis Logistics, Creative Advertising, dan Food & Beverage di Indonesia.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: ORG.address.street,
+    addressLocality: ORG.address.locality,
+    addressRegion: ORG.address.region,
+    postalCode: ORG.address.postalCode,
+    addressCountry: ORG.address.country,
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    telephone: ORG.phone,
+    email: ORG.email,
+    areaServed: 'ID',
+    availableLanguage: ['id', 'en'],
+  },
+}
 
 const inter = Inter({
   subsets: ['latin'],
@@ -17,11 +46,7 @@ const manrope = Manrope({
 })
 
 export const metadata: Metadata = {
-  // ponytail: set NEXT_PUBLIC_SITE_URL when deploying anywhere but tachi.id,
-  // otherwise OG images resolve to a host that doesn't serve them.
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.tachi.id',
-  ),
+  metadataBase: new URL(SITE_URL),
   title: 'Tachi Group — Stronger Together',
   description:
     'PT Tantra Hachi Group (Tachi Group) adalah perusahaan holding modern yang menaungi lini bisnis strategis di bidang Logistics, Creative Advertising, dan Food & Beverage di Indonesia.',
@@ -69,6 +94,12 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         {children}
         <WhatsAppButton />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(ORGANIZATION_SCHEMA),
+          }}
+        />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
