@@ -6,11 +6,11 @@ import { Logo } from '@/components/logo'
 import { cn } from '@/lib/utils'
 
 const NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'Tentang Kami', href: '#tentang' },
-  { label: 'Grup Bisnis', href: '#bisnis' },
-  { label: 'Klien Kami', href: '#klien' },
-  { label: 'Kontak', href: '#kontak' },
+  { label: 'Home', href: '/#home' },
+  { label: 'Tentang Kami', href: '/#tentang' },
+  { label: 'Grup Bisnis', href: '/#bisnis' },
+  { label: 'Klien Kami', href: '/#klien' },
+  { label: 'Kontak', href: '/#kontak' },
 ]
 
 export function SiteHeader() {
@@ -34,7 +34,7 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#home" aria-label="Tachi Group beranda">
+        <a href="/#home" aria-label="Tachi Group beranda">
           <Logo tone={scrolled ? 'brand' : 'light'} />
         </a>
 
@@ -56,7 +56,7 @@ export function SiteHeader() {
         </nav>
 
         <a
-          href="#kontak"
+          href="/#kontak"
           className="hidden rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] md:inline-flex"
         >
           Hubungi Kami
@@ -90,7 +90,7 @@ export function SiteHeader() {
               </a>
             ))}
             <a
-              href="#kontak"
+              href="/#kontak"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-full bg-primary px-5 py-3 text-center text-base font-semibold text-primary-foreground"
             >

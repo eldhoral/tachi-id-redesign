@@ -26,11 +26,11 @@ function Instagram(props: SVGProps<SVGSVGElement>) {
 }
 
 const NAV = [
-  { label: 'Home', href: '#home' },
-  { label: 'Tentang Kami', href: '#tentang' },
-  { label: 'Grup Bisnis', href: '#bisnis' },
-  { label: 'Klien Kami', href: '#klien' },
-  { label: 'Kontak', href: '#kontak' },
+  { label: 'Home', href: '/#home' },
+  { label: 'Tentang Kami', href: '/#tentang' },
+  { label: 'Grup Bisnis', href: '/#bisnis' },
+  { label: 'Klien Kami', href: '/#klien' },
+  { label: 'Kontak', href: '/#kontak' },
 ]
 
 const SOCIALS = [

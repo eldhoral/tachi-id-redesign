@@ -36,14 +36,14 @@ export function Hero() {
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
-              href="#bisnis"
+              href="/#bisnis"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
             >
               Jelajahi Grup Bisnis
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
-              href="#tentang"
+              href="/#tentang"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
             >
               Tentang Kami
