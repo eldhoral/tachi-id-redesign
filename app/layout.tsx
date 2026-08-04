@@ -1,7 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Manrope } from 'next/font/google'
-import { WhatsAppButton } from '@/components/whatsapp-button'
 import { ORG, SITE_URL } from '@/lib/site'
 import './globals.css'
 
@@ -93,7 +92,6 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         {children}
-        <WhatsAppButton />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

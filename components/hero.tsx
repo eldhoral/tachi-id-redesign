@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
+import { getDictionary, localePath, type Locale } from '@/lib/i18n'
 
-export function Hero() {
+export function Hero({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).hero
+  const home = localePath(locale, '/')
+
   return (
     <section
       id="home"
@@ -9,7 +13,7 @@ export function Hero() {
     >
       <Image
         src="/hero-towers.png"
-        alt="Gedung pencakar langit korporat modern"
+        alt={t.imageAlt}
         fill
         priority
         sizes="100vw"
@@ -21,32 +25,30 @@ export function Hero() {
       <div className="relative mx-auto w-full max-w-6xl px-4 py-32 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-white backdrop-blur-sm">
-            PT TANTRA HACHI GROUP
+            {t.badge}
           </span>
           <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight text-white text-balance sm:text-6xl lg:text-7xl">
             Tachi Group
           </h1>
           <p className="mt-4 font-display text-xl font-medium tracking-[0.15em] text-white/80 sm:text-2xl">
-            STRONGER TOGETHER
+            {t.slogan}
           </p>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80 text-pretty">
-            Perusahaan holding modern yang menaungi lini bisnis strategis di
-            bidang Logistics, Creative Advertising, dan Food &amp; Beverage —
-            memperkuat rantai nilai bisnis di seluruh Indonesia.
+            {t.text}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
-              href="/#bisnis"
+              href={`${home}#bisnis`}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
             >
-              Jelajahi Grup Bisnis
+              {t.ctaBusiness}
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
-              href="/#tentang"
+              href={`${home}#tentang`}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
             >
-              Tentang Kami
+              {t.ctaAbout}
             </a>
           </div>
         </div>

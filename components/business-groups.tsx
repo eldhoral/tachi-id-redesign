@@ -2,21 +2,23 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { GROUPS } from '@/lib/business-groups'
+import { getDictionary, localePath, type Locale } from '@/lib/i18n'
 
-export function BusinessGroups() {
+export function BusinessGroups({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).business
+
   return (
     <section id="bisnis" className="scroll-mt-16 bg-secondary/40 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Grup Bisnis
+            {t.eyebrow}
           </span>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground text-balance sm:text-4xl">
-            Lini Bisnis Strategis Kami
+            {t.heading}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground text-pretty">
-            Tiga unit bisnis yang saling bersinergi untuk memperkuat rantai
-            nilai bisnis di Indonesia.
+            {t.text}
           </p>
         </div>
 
@@ -40,7 +42,7 @@ export function BusinessGroups() {
                 </div>
                 {g.soon && (
                   <span className="absolute right-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                    Segera Hadir
+                    {t.soon}
                   </span>
                 )}
               </div>
@@ -48,17 +50,17 @@ export function BusinessGroups() {
                 <h3 className="font-display text-xl font-bold text-foreground">
                   {/* ponytail: stretched link — title, CTA, and whole card share one <a> */}
                   <Link
-                    href={`/bisnis/${g.slug}`}
+                    href={localePath(locale, `/bisnis/${g.slug}`)}
                     className="transition-colors after:absolute after:inset-0 hover:text-primary"
                   >
                     {g.name}
                   </Link>
                 </h3>
                 <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">
-                  {g.text}
+                  {g.copy[locale].text}
                 </p>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                  {g.soon ? 'Dalam Pengembangan' : 'Pelajari Lebih Lanjut'}
+                  {g.soon ? t.inDevelopment : t.learnMore}
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </div>

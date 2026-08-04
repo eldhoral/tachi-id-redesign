@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { getDictionary, type Locale } from '@/lib/i18n'
 
 const CLIENTS = [
   { name: 'DIM Cargo', src: '/clients/dim-cargo.jpg' },
@@ -17,20 +18,21 @@ const CLIENTS = [
   { name: 'Hitachi', src: '/clients/hitachi.jpg' },
 ]
 
-export function Clients() {
+export function Clients({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).clients
+
   return (
     <section id="klien" className="scroll-mt-16 bg-secondary/40 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Klien Kami
+            {t.eyebrow}
           </span>
           <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground text-balance sm:text-4xl">
-            Dipercaya di Berbagai Sektor
+            {t.heading}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground text-pretty">
-            Kami bermitra dengan pelaku bisnis dari beragam industri untuk
-            menghadirkan solusi terintegrasi yang andal.
+            {t.text}
           </p>
         </div>
 
