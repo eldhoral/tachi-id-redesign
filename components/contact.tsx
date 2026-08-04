@@ -2,25 +2,21 @@
 
 import { MapPin, Phone, Mail, Send } from 'lucide-react'
 import { buildWhatsAppUrl } from '@/lib/whatsapp'
+import { ORG, ORG_ADDRESS_LINE } from '@/lib/site'
 
 const CONTACT_INFO = [
-  {
-    icon: MapPin,
-    label: 'Kantor',
-    value:
-      'Jalan Perum Villa Indah Permai Blok E6 No.33 RT.7/RW.33, Tl. Pucung, Kota Bekasi, Jawa Barat, ID 17121',
-  },
+  { icon: MapPin, label: 'Kantor', value: ORG_ADDRESS_LINE },
   {
     icon: Phone,
     label: 'Telepon',
-    value: '+62 811 1184 0091',
-    href: 'tel:+6281111840091',
+    value: ORG.phone,
+    href: ORG.phoneHref,
   },
   {
     icon: Mail,
     label: 'Email',
-    value: 'tantrahachigroup@tachi.id',
-    href: 'mailto:tantrahachigroup@tachi.id',
+    value: ORG.email,
+    href: `mailto:${ORG.email}`,
   },
 ]
 
