@@ -18,9 +18,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const group = getGroup((await params).slug)
   if (!group) return {}
+  const title = `${group.name} — Tachi Group`
+  const images = [
+    { url: `/og/${group.slug}.jpg`, width: 1200, height: 630, alt: group.name },
+  ]
   return {
-    title: `${group.name} — Tachi Group`,
+    title,
     description: group.text,
+    openGraph: {
+      title,
+      description: group.text,
+      type: 'article',
+      locale: 'id_ID',
+      images,
+    },
+    twitter: { card: 'summary_large_image', title, images },
   }
 }
 
