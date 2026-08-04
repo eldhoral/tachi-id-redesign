@@ -1,5 +1,8 @@
 const WHATSAPP_NUMBER = '6281111840091'
 
+export const whatsAppUrl = (text: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
+
 export function buildWhatsAppUrl(data: {
   name: string
   email: string
@@ -17,5 +20,5 @@ export function buildWhatsAppUrl(data: {
     .filter(Boolean)
     .join('\n')
 
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
+  return whatsAppUrl(text)
 }
