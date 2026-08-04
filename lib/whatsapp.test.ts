@@ -27,4 +27,16 @@ const noSubject = new URL(
 ).searchParams.get('text')!
 assert.ok(!noSubject.includes('Perihal:'))
 
-console.log('ok — buildWhatsAppUrl')
+// English locale swaps the template, not the number
+const enUrl = buildWhatsAppUrl(
+  { name: 'Budi', email: 'b@c.id', subject: 'Freight', message: 'Hello' },
+  'en',
+)
+assert.ok(enUrl.startsWith('https://wa.me/6281111840091?text='))
+const enText = new URL(enUrl).searchParams.get('text')!
+assert.match(enText, /^Hello Tachi Group, my name is Budi\./)
+assert.match(enText, /Subject: Freight/)
+assert.match(enText, /Reply to: b@c\.id/)
+assert.ok(!enText.includes('Perihal'), 'must not leak Indonesian into EN')
+
+console.log('ok — buildWhatsAppUrl (id + en)')

@@ -6,36 +6,13 @@ import {
   Lightbulb,
   Target,
 } from 'lucide-react'
+import { getDictionary, type Locale } from '@/lib/i18n'
 
-const PRINCIPLES = [
-  {
-    icon: ShieldCheck,
-    title: 'Integrity',
-    text: 'Kejujuran dan tanggung jawab adalah dasar kami.',
-  },
-  {
-    icon: HeartHandshake,
-    title: 'Customer Focus',
-    text: 'Kepuasan pelanggan adalah tujuan utama kami.',
-  },
-  {
-    icon: Zap,
-    title: 'Speed',
-    text: 'Ketepatan waktu adalah prioritas utama.',
-  },
-  {
-    icon: Users,
-    title: 'Collaboration',
-    text: 'Kerja sama yang solid antar tim dan mitra bisnis.',
-  },
-  {
-    icon: Lightbulb,
-    title: 'Innovation',
-    text: 'Selalu beradaptasi dengan teknologi terbaru.',
-  },
-]
+const ICONS = [ShieldCheck, HeartHandshake, Zap, Users, Lightbulb]
 
-export function VisionPrinciples() {
+export function VisionPrinciples({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).vision
+
   return (
     <section className="bg-background py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -51,13 +28,11 @@ export function VisionPrinciples() {
                 <Target className="h-6 w-6 text-primary" />
               </span>
               <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-                Visi Kami
+                {t.eyebrow}
               </span>
             </div>
             <p className="mt-6 font-display text-2xl font-semibold leading-snug tracking-tight text-foreground text-balance sm:text-3xl">
-              Menjadi perusahaan holding group nasional yang unggul, inovatif,
-              dan berkelanjutan dengan jaringan distribusi terintegrasi di
-              seluruh Indonesia.
+              {t.text}
             </p>
           </div>
         </div>
@@ -66,30 +41,33 @@ export function VisionPrinciples() {
         <div className="mt-20">
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-              Prinsip Kami
+              {t.principlesEyebrow}
             </span>
             <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground text-balance sm:text-4xl">
-              Nilai yang Kami Pegang
+              {t.principlesHeading}
             </h2>
           </div>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {PRINCIPLES.map((p) => (
-              <div
-                key={p.title}
-                className="rounded-2xl border border-border bg-card p-6 text-center transition-colors hover:border-primary/40"
-              >
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-accent">
-                  <p.icon className="h-7 w-7 text-primary" />
+            {t.principles.map((p, i) => {
+              const Icon = ICONS[i]
+              return (
+                <div
+                  key={p.title}
+                  className="rounded-2xl border border-border bg-card p-6 text-center transition-colors hover:border-primary/40"
+                >
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-accent">
+                    <Icon className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-semibold text-foreground">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-pretty">
+                    {p.text}
+                  </p>
                 </div>
-                <h3 className="mt-5 font-display text-lg font-semibold text-foreground">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-pretty">
-                  {p.text}
-                </p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

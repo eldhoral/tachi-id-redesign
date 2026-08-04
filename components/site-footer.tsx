@@ -1,5 +1,7 @@
 import type { SVGProps } from 'react'
 import { Logo } from '@/components/logo'
+import { ORG } from '@/lib/site'
+import { getDictionary, localePath, type Locale } from '@/lib/i18n'
 
 function Facebook(props: SVGProps<SVGSVGElement>) {
   return (
@@ -25,22 +27,25 @@ function Instagram(props: SVGProps<SVGSVGElement>) {
   )
 }
 
-const NAV = [
-  { label: 'Home', href: '/#home' },
-  { label: 'Tentang Kami', href: '/#tentang' },
-  { label: 'Brand Identity', href: '/brand-identity' },
-  { label: 'Grup Bisnis', href: '/#bisnis' },
-  { label: 'Klien Kami', href: '/#klien' },
-  { label: 'Kontak', href: '/#kontak' },
-]
-
 const SOCIALS = [
   { label: 'Facebook', href: '#', icon: Facebook },
   { label: 'Twitter', href: '#', icon: Twitter },
   { label: 'Instagram', href: '#', icon: Instagram },
 ]
 
-export function SiteFooter() {
+export function SiteFooter({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale)
+  const home = localePath(locale, '/')
+
+  const NAV = [
+    { label: t.nav.home, href: `${home}#home` },
+    { label: t.nav.about, href: `${home}#tentang` },
+    { label: t.nav.brandIdentity, href: localePath(locale, '/brand-identity') },
+    { label: t.nav.business, href: `${home}#bisnis` },
+    { label: t.nav.clients, href: `${home}#klien` },
+    { label: t.nav.contact, href: `${home}#kontak` },
+  ]
+
   return (
     <footer className="border-t border-border bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
@@ -48,14 +53,13 @@ export function SiteFooter() {
           <div>
             <Logo tone="brand" />
             <p className="mt-5 max-w-xs leading-relaxed text-muted-foreground">
-              Perusahaan holding modern yang memperkuat rantai nilai bisnis di
-              seluruh Indonesia. Stronger Together.
+              {t.footer.tagline}
             </p>
           </div>
 
           <div>
             <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Navigasi
+              {t.footer.navHeading}
             </h3>
             <ul className="mt-5 space-y-3">
               {NAV.map((n) => (
@@ -73,13 +77,13 @@ export function SiteFooter() {
 
           <div>
             <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Terhubung Dengan Kami
+              {t.footer.connectHeading}
             </h3>
             <p className="mt-5 leading-relaxed text-muted-foreground">
-              tantrahachigroup@tachi.id
+              {ORG.email}
             </p>
             <p className="mt-1 leading-relaxed text-muted-foreground">
-              +62 811 1184 0091
+              {ORG.phone}
             </p>
             <div className="mt-5 flex gap-3">
               {SOCIALS.map((s) => (
@@ -97,8 +101,8 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          Copyright &copy; {new Date().getFullYear()} Tachi Group. All Rights
-          Reserved.
+          Copyright &copy; {new Date().getFullYear()} Tachi Group.{' '}
+          {t.footer.rights}
         </div>
       </div>
     </footer>
