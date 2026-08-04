@@ -28,6 +28,7 @@ function Instagram(props: SVGProps<SVGSVGElement>) {
 const NAV = [
   { label: 'Home', href: '/#home' },
   { label: 'Tentang Kami', href: '/#tentang' },
+  { label: 'Brand Identity', href: '/brand-identity' },
   { label: 'Grup Bisnis', href: '/#bisnis' },
   { label: 'Klien Kami', href: '/#klien' },
   { label: 'Kontak', href: '/#kontak' },
