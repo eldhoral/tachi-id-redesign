@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     // ponytail: every image goes through next/image, so let Next resize and
     // re-encode. Set unoptimized: true again only if this ever ships as a

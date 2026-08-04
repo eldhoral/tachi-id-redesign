@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ChevronDown } from 'lucide-react'
 import { Logo } from '@/components/logo'
 import { cn } from '@/lib/utils'
 import {
@@ -25,10 +25,22 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const t = getDictionary(locale)
   const home = localePath(locale, '/')
 
-  const NAV_LINKS = [
+  const NAV_LINKS: {
+    label: string
+    href: string
+    children?: { label: string; href: string }[]
+  }[] = [
     { label: t.nav.home, href: `${home}#home` },
-    { label: t.nav.about, href: `${home}#tentang` },
-    { label: t.nav.brandIdentity, href: localePath(locale, '/brand-identity') },
+    {
+      label: t.nav.about,
+      href: `${home}#tentang`,
+      children: [
+        {
+          label: t.nav.brandIdentity,
+          href: localePath(locale, '/brand-identity'),
+        },
+      ],
+    },
     { label: t.nav.business, href: `${home}#bisnis` },
     { label: t.nav.clients, href: `${home}#klien` },
     { label: t.nav.contact, href: `${home}#kontak` },
@@ -72,20 +84,49 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         </a>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                scrolled
-                  ? 'text-foreground/80 hover:bg-secondary hover:text-foreground'
-                  : 'text-white/85 hover:bg-white/10 hover:text-white',
-              )}
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const linkClass = cn(
+              'inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+              scrolled
+                ? 'text-foreground/80 hover:bg-secondary hover:text-foreground'
+                : 'text-white/85 hover:bg-white/10 hover:text-white',
+            )
+
+            if (!link.children) {
+              return (
+                <a key={link.href} href={link.href} className={linkClass}>
+                  {link.label}
+                </a>
+              )
+            }
+
+            // ponytail: hover + focus-within, no JS state. The parent stays a
+            // real link, so touch and keyboard both reach the section.
+            return (
+              <div key={link.href} className="group relative">
+                <a href={link.href} className={linkClass}>
+                  {link.label}
+                  <ChevronDown
+                    className="h-3.5 w-3.5 transition-transform group-hover:rotate-180"
+                    aria-hidden="true"
+                  />
+                </a>
+                <div className="invisible absolute left-0 top-full min-w-52 pt-2 opacity-0 transition-opacity group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                  <div className="overflow-hidden rounded-xl border border-border bg-background py-1.5 shadow-lg">
+                    {link.children.map((child) => (
+                      <a
+                        key={child.href}
+                        href={child.href}
+                        className="block px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
+                      >
+                        {child.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
@@ -119,14 +160,25 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         <div className="border-t border-border bg-background/95 backdrop-blur-md lg:hidden">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4">
             {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-secondary"
-              >
-                {link.label}
-              </a>
+              <div key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-md px-3 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-secondary"
+                >
+                  {link.label}
+                </a>
+                {link.children?.map((child) => (
+                  <a
+                    key={child.href}
+                    href={child.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-md py-2.5 pl-7 pr-3 text-base font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </div>
             ))}
             <a
               href={`${home}#kontak`}
