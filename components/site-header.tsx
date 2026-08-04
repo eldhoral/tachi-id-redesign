@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 const NAV_LINKS = [
   { label: 'Home', href: '/#home' },
   { label: 'Tentang Kami', href: '/#tentang' },
+  { label: 'Brand Identity', href: '/brand-identity' },
   { label: 'Grup Bisnis', href: '/#bisnis' },
   { label: 'Klien Kami', href: '/#klien' },
   { label: 'Kontak', href: '/#kontak' },

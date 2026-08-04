@@ -19,3 +19,10 @@ export const ORG = {
 } as const
 
 export const ORG_ADDRESS_LINE = `${ORG.address.street}, ${ORG.address.locality}, ${ORG.address.region}, ID ${ORG.address.postalCode}`
+
+// No API key needed for this form of the embed, unlike the Maps Embed API.
+export const ORG_MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(ORG_ADDRESS_LINE)}&output=embed`
+
+// ponytail: drop the PDF in public/ and set this path to reveal the download
+// button. null keeps it hidden — better than shipping a link that 404s.
+export const COMPANY_PROFILE_PDF: string | null = null

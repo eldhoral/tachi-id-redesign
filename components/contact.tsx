@@ -1,8 +1,13 @@
 'use client'
 
-import { MapPin, Phone, Mail, Send } from 'lucide-react'
+import { MapPin, Phone, Mail, Send, Download } from 'lucide-react'
 import { buildWhatsAppUrl } from '@/lib/whatsapp'
-import { ORG, ORG_ADDRESS_LINE } from '@/lib/site'
+import {
+  ORG,
+  ORG_ADDRESS_LINE,
+  ORG_MAP_EMBED,
+  COMPANY_PROFILE_PDF,
+} from '@/lib/site'
 
 const CONTACT_INFO = [
   { icon: MapPin, label: 'Kantor', value: ORG_ADDRESS_LINE },
@@ -74,6 +79,27 @@ export function Contact() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {COMPANY_PROFILE_PDF && (
+              <a
+                href={COMPANY_PROFILE_PDF}
+                download
+                className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-base font-semibold text-foreground transition-colors hover:bg-secondary"
+              >
+                <Download className="h-4 w-4" />
+                Unduh Company Profile
+              </a>
+            )}
+
+            <div className="mt-10 overflow-hidden rounded-2xl border border-border">
+              <iframe
+                src={ORG_MAP_EMBED}
+                title={`Lokasi kantor ${ORG.name}`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-64 w-full border-0"
+              />
             </div>
           </div>
 
