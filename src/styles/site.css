@@ -17,7 +17,7 @@ a:hover{opacity:.8}
 .plain{text-decoration:none}
 .huge{font-weight:400;letter-spacing:-.045em;line-height:.8;white-space:nowrap;display:flex;align-items:flex-start}
 .huge small{font-size:.2em;letter-spacing:-.02em;margin:.06em 0 0 .08em;line-height:1}
-.state{font-size:clamp(40px,5vw,76px);line-height:1.04;letter-spacing:-.035em;font-weight:400;margin:0}
+.state{font-size:clamp(40px,5vw,76px);line-height:1.04;letter-spacing:-.035em;font-weight:400;margin:0;text-wrap:balance}
 .rows>*{border-top:1px solid #D4D4D4;padding:22px 0}
 .rows>:last-child{border-bottom:1px solid #D4D4D4}
 .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
@@ -29,7 +29,7 @@ a:hover{opacity:.8}
 .hero nav,.hero .tools{display:flex;gap:36px}
 .hero .tools{gap:32px}
 .lang [aria-current]{text-decoration:underline;text-underline-offset:6px}
-.hero .lead{margin:0;font-size:clamp(26px,2.6vw,38px);line-height:1.12;letter-spacing:-.025em;max-width:19ch}
+.hero .lead{margin:0;font-size:clamp(26px,2.6vw,38px);line-height:1.12;letter-spacing:-.025em;max-width:19ch;text-wrap:pretty}
 .hero h1{margin:auto 0 0;padding-left:30px;font-size:31vw;transform:translateY(14%)}
 
 /* statement + pixel T */
