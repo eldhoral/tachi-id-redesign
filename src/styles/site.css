@@ -98,6 +98,13 @@ a{color:inherit}
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:36px;max-width:520px}
 .pair img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block}
 
+/* video band */
+.reel{position:relative;margin-top:40px;aspect-ratio:16/9;background:#1E1E1E;overflow:hidden}
+.reel video{width:100%;height:100%;object-fit:cover;display:block}
+.reel-toggle{position:absolute;top:16px;right:16px;min-height:44px;padding:0 18px;border:1.5px solid rgba(255,255,255,.7);border-radius:9999px;background:rgba(30,30,30,.45);color:#FFFFFF;font:inherit;font-size:16px;cursor:pointer;transition:transform 160ms var(--ease-out),background-color 200ms ease}
+.reel-toggle:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.reel-toggle:hover{background:rgba(30,30,30,.7)}}
+
 /* contact + footer */
 .contact{background:var(--ac);color:var(--on);padding:60px 0;margin-top:40px}
 .contact .line{display:flex;flex-wrap:wrap;gap:24px 64px;margin-top:80px;font-size:22px;align-items:baseline}
@@ -230,6 +237,8 @@ a{color:inherit}
   .chat .ul{font-size:28px!important}
   .pair{margin-top:24px}
 
+  .reel{margin-top:24px}
+  .reel-toggle{top:8px;right:8px;font-size:14px;padding:0 14px}
   .contact{margin-top:24px;padding:48px 0}
   .contact .line{margin-top:32px;flex-direction:column;gap:8px;font-size:18px}
   .foot{padding-top:56px;padding-bottom:max(24px,env(safe-area-inset-bottom))}
