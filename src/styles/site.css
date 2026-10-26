@@ -25,11 +25,13 @@ a{color:inherit}
 /* hero */
 .hero{background:var(--ac);color:var(--on);min-height:900px;display:flex;flex-direction:column;overflow:hidden}
 .hero header{gap:24px;padding-top:40px;font-size:22px}
+.brand{display:inline-flex;align-items:center;gap:14px;align-self:start}
+.brand img{height:40px;width:auto;display:block}
 .hero nav,.hero .tools{display:flex;gap:36px}
 .hero .tools{gap:32px}
 .lang [aria-current]{text-decoration:underline;text-underline-offset:6px}
 .hero .lead{margin:0;font-size:clamp(26px,2.6vw,38px);line-height:1.12;letter-spacing:-.025em;max-width:19ch;text-wrap:pretty}
-.hero h1{margin:auto 0 0;padding-left:30px;font-size:31vw;transform:translateY(14%)}
+.hero .huge{margin:auto 0 0;padding-left:30px;font-size:31vw;transform:translateY(14%)}
 .intro{gap:24px;margin-top:56px}
 .hero-cta{display:none}
 
@@ -100,6 +102,9 @@ a{color:inherit}
 .contact{background:var(--ac);color:var(--on);padding:60px 0;margin-top:40px}
 .contact .line{display:flex;flex-wrap:wrap;gap:24px 64px;margin-top:80px;font-size:22px;align-items:baseline}
 .foot{padding-top:90px;padding-bottom:30px}
+/* footer lockup: mark + wordmark, the sword running below the baseline as in the brand logo */
+.lockup{margin:0;font-size:22vw}
+.lockup img{height:.98em;width:auto;margin:-.02em .1em 0 0;flex:none}
 .foot-row{border-top:1px solid #D4D4D4;margin-top:70px;padding-top:30px}
 .foot-legal{border-top:1px solid #D4D4D4;margin-top:90px;padding-top:24px;font-size:16px}
 .dock{display:none}
@@ -137,8 +142,8 @@ a{color:inherit}
 
 @media (prefers-reduced-motion:no-preference){
   /* hero: the wordmark rises out from behind the hero's bottom edge, then the copy follows */
-  .hero h1>*{animation:rise 1100ms var(--ease-out) both}
-  .hero h1 small{animation-delay:90ms}
+  .hero .huge>*{animation:rise 1100ms var(--ease-out) both}
+  .hero .huge small{animation-delay:90ms}
   .intro .lead,.intro .hero-cta{animation:fade-up 700ms var(--ease-out) both}
   .intro .lead{animation-delay:150ms}
   .intro .hero-cta{animation-delay:210ms}
@@ -173,12 +178,13 @@ a{color:inherit}
 
   /* hero: one screen, wordmark sized to the width, the WhatsApp action inside thumb reach */
   .hero{min-height:100vh;min-height:100svh}
-  .hero header{padding-top:max(24px,env(safe-area-inset-top));font-size:18px;gap:12px}
+  .hero header{padding-top:max(24px,env(safe-area-inset-top));font-size:18px;gap:16px}
+  .brand img{height:34px}
   .hero header>div{flex-wrap:nowrap!important}
   .intro{margin-top:40px}
   .hero .lead{font-size:28px;line-height:1.14;max-width:16ch}
   .hero-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:32px;min-height:56px;padding:0 20px;background:#FFFFFF;color:#1E1E1E;text-decoration:none;font-size:20px;letter-spacing:-.02em}
-  .hero h1{padding-left:12px;font-size:calc((100vw - 24px) / 2.62);transform:translateY(12%);margin-top:48px} /* "Tachi" + "Group" measure 2.59em */
+  .hero .huge{padding-left:12px;font-size:calc((100vw - 24px) / 2.62);transform:translateY(12%);margin-top:48px} /* "Tachi" + "Group" measure 2.59em */
 
   .statement{padding:72px 0 64px}
   .points{margin-top:48px;gap:40px}

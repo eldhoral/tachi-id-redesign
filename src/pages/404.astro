@@ -1,11 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { copy } from '../i18n';
+import markWhite from '../assets/tachi-mark-white.png';
 const { id, en } = copy;
 ---
 <Base lang="id" title={`${id.notFound.title} | Tachi Group`} description={id.notFound.text} noindex>
   <main class="k hero" style="min-height: 100vh">
     <div class="pad" style="padding-top: 40px; display: flex; flex-direction: column; gap: 24px; font-size: 22px">
+      <a href="/" class="brand plain" style="margin-bottom: 32px"><Image src={markWhite} alt="Tachi Group" height={40} densities={[1, 2, 3]} loading="eager" /></a>
       <h1 class="state">{id.notFound.title}</h1>
       <p style="margin: 0">{id.notFound.text}</p>
       <a href="/" class="ul">{id.notFound.home}</a>

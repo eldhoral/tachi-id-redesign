@@ -17,6 +17,8 @@ import kbn from '../assets/clients/kbn.jpg';
 import samudera from '../assets/clients/samudera.jpg';
 import dimCargo from '../assets/clients/dim-cargo.jpg';
 import infinith from '../assets/clients/infinith.png';
+import mark from '../assets/tachi-mark.png';
+import markWhite from '../assets/tachi-mark-white.png';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -41,7 +43,10 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
 
   <section class="hero" id="top">
     <header class="pad two">
-      <span>{t.slogan}</span>
+      <a href={lang === 'id' ? '/' : '/en/'} class="brand plain">
+        <Image src={markWhite} alt="Tachi Group" height={40} densities={[1, 2, 3]} loading="eager" />
+        <span>{t.slogan}</span>
+      </a>
       <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap">
         <nav aria-label={t.nav.label}>
           <a href="#unit" class="plain">{t.nav.units}</a>
@@ -210,7 +215,7 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
   </main>
 
   <footer class="pad foot">
-    <p aria-hidden="true" class="huge acc" style="margin: 0; font-size: 27vw"><span>Tachi</span><small style="margin-top: .05em">Group</small></p>
+    <p aria-hidden="true" class="huge acc lockup"><Image src={mark} alt="" width={290} densities={[1, 2]} /><span>Tachi</span><small style="margin-top: .05em">Group</small></p>
     <div class="two foot-row">
       <a href={wa()} class="ul acc tap" style="font-size: 30px; align-self: start">{t.footer.chat}</a>
       <nav aria-label={t.nav.footer} class="rows foot-nav">
