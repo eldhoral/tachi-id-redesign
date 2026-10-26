@@ -44,27 +44,33 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
           <a href="#layanan" class="plain hide-sm">{t.nav.services}</a>
         </nav>
         <div class="tools">
-          <span class="lang hide-sm">
+          <span class="lang">
             {lang === 'id'
               ? <><span aria-current="page">ID</span> / <a href="/en/" hreflang="en" lang="en" class="plain">EN</a></>
               : <><a href="/" hreflang="id" lang="id" class="plain">ID</a> / <span aria-current="page">EN</span></>}
           </span>
-          <a href={wa()} class="ul">{t.nav.cta}</a>
+          <a href={wa()} class="ul hide-sm">{t.nav.cta}</a>
         </div>
       </div>
     </header>
-    <div class="pad two" style="gap: 24px; margin-top: 56px">
+    <div class="pad two intro">
       <span aria-hidden="true" class="hide-sm"></span>
-      <p class="lead">{t.heroLead}</p>
+      <div>
+        <p class="lead">{t.heroLead}</p>
+        <a href={wa()} class="hero-cta only-sm">
+          <span>{t.nav.cta}</span>
+          <svg aria-hidden="true" viewBox="0 0 44 24" width="32" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
+        </a>
+      </div>
     </div>
     <h1 class="huge"><span>Tachi</span><small>Group</small></h1>
   </section>
 
   <main id="main">
-    <section style="padding: 150px 0 140px">
+    <section class="statement">
       <div class="pad">
         <h2 class="state" style="max-width: 15ch">{t.statement}</h2>
-        <div class="two" style="margin-top: 140px; align-items: center">
+        <div class="two points">
           <div aria-hidden="true" class="px">
             {T.map((v, i) => <span style={`background:${fill[v]};animation-delay:${i * 45}ms`}></span>)}
           </div>
@@ -91,7 +97,7 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
             <div><p class="stat-label">{t.dark.reachLabel}</p><p class="acc stat-value" style="font-size: 40px; line-height: 1.05; letter-spacing: -.03em">{t.dark.reach}</p></div>
           </div>
         </div>
-        <h2 id="klien" style="margin: 120px 0 0; font-size: 20px; font-weight: 400; border-bottom: 1px solid #333; padding-bottom: 20px">{t.dark.clients}</h2>
+        <h2 id="klien" class="clients-h">{t.dark.clients}</h2>
         <div class="logos">
           {clients.map(([src, alt]) => (
             <div><Image src={src} alt={alt} height={alt === 'Infinith' ? 80 : 110} densities={[1, 2]} class={alt === 'Infinith' ? 'short' : undefined} /></div>
@@ -102,27 +108,27 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
 
     <section id="layanan" class="inset services" data-services>
       <div class="pad two" style="gap: 0">
-        <div class="left" style="padding-right: 40px; border-right: 1px solid #E2E2E2; padding-bottom: 60px">
-          <h2 class="acc" style="margin: 0 0 90px; font-size: 26px; font-weight: 400; line-height: 1.2; max-width: 18ch">{t.services.title}</h2>
+        <div class="left">
+          <h2 class="acc svc-title">{t.services.title}</h2>
           <div role="group" aria-label={t.services.groupLabel}>
             {t.services.items.map((s, i) => (
               <button type="button" class="svc" data-i={i} aria-pressed={i === 0 ? 'true' : 'false'}>{s.label}</button>
             ))}
           </div>
         </div>
-        <div class="right" style="padding: 0 0 60px 40px; display: flex; flex-direction: column; justify-content: center; gap: 48px">
+        <div class="right">
           <div aria-hidden="true" class="blocks">
             <span></span><span style="background: #1E1E1E"></span><span></span>
             <span></span><span style="background: #FFFFFF"></span><span></span>
           </div>
           <div aria-live="polite">
             {t.services.items.map((s, i) => (
-              <div data-panel={i} hidden={i !== 0} style="display: flex; flex-direction: column; gap: 48px">
+              <div class="panel" data-panel={i} hidden={i !== 0}>
                 <div>
                   <p style="margin: 0 0 6px; font-size: 18px; color: #6B6B6B">{s.unit}</p>
                   <p style="margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.02em; max-width: 22ch">{s.text}</p>
                 </div>
-                <a href={wa(t.services.message(s.unit, s.label))} class="ul acc" style="font-size: 22px; align-self: flex-start">{t.services.ask}</a>
+                <a href={wa(t.services.message(s.unit, s.label))} class="ul acc tap" style="font-size: 22px; align-self: flex-start">{t.services.ask}</a>
               </div>
             ))}
           </div>
@@ -156,9 +162,9 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
       </div>
     </section>
 
-    <section id="unit" style="padding: 150px 0 60px">
+    <section id="unit" class="units">
       <div class="pad">
-        <h2 class="state" style="font-size: clamp(56px, 7.4vw, 112px); line-height: .96; max-width: 10ch; margin-bottom: 110px">{t.units.title}</h2>
+        <h2 class="state units-title">{t.units.title}</h2>
         {t.units.items.map((u, i) => (
           <article class="case">
             <div class="tile" style={i === 3 ? 'background: #1E1E1E' : undefined}>
@@ -170,7 +176,7 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
             <div class="body">
               <h3>{u.name}<sup>{u.tag}</sup></h3>
               <p>{u.text}</p>
-              <a href={wa(t.units.hello(u.name))} class="ul acc">{u.cta}</a>
+              <a href={wa(t.units.hello(u.name))} class="ul acc tap">{u.cta}</a>
             </div>
           </article>
         ))}
@@ -194,18 +200,18 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
       <div class="pad">
         <h2 class="state" style="font-size: clamp(48px, 6.4vw, 96px); line-height: .98; max-width: 14ch">{t.cta}</h2>
         <div class="line">
-          <a href={wa()} class="ul" style="font-size: 32px">{PHONE_DISPLAY}</a>
-          <a href={`mailto:${EMAIL}`} class="plain">{EMAIL}</a>
+          <a href={wa()} class="ul tap" style="font-size: 32px">{PHONE_DISPLAY}</a>
+          <a href={`mailto:${EMAIL}`} class="plain tap">{EMAIL}</a>
           <span>{t.address}</span>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="pad" style="padding-top: 90px; padding-bottom: 30px">
+  <footer class="pad foot">
     <p aria-hidden="true" class="huge acc" style="margin: 0; font-size: 27vw"><span>Tachi</span><small style="margin-top: .05em">Group</small></p>
-    <div class="two" style="border-top: 1px solid #D4D4D4; margin-top: 70px; padding-top: 30px">
-      <a href={wa()} class="ul acc" style="font-size: 30px; align-self: start">{t.footer.chat}</a>
+    <div class="two foot-row">
+      <a href={wa()} class="ul acc tap" style="font-size: 30px; align-self: start">{t.footer.chat}</a>
       <nav aria-label={t.nav.footer} class="rows foot-nav">
         <a href="#unit" class="plain">{t.nav.units}</a>
         <a href="#layanan" class="plain">{t.nav.services}</a>
@@ -213,10 +219,15 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
         <a href="#kontak" class="plain">{t.nav.contact}</a>
       </nav>
     </div>
-    <div class="two" style="border-top: 1px solid #D4D4D4; margin-top: 90px; padding-top: 24px; font-size: 16px">
+    <div class="two foot-legal">
       <span>{t.footer.rights}</span>
     </div>
   </footer>
+
+  <a href={wa()} class="dock" data-dock>
+    <span>{t.units.chat}</span>
+    <svg aria-hidden="true" viewBox="0 0 44 24" width="32" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
+  </a>
 </div>
 
 <script>
@@ -248,5 +259,25 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
     };
     proc.querySelector('[data-prev]')!.addEventListener('click', () => go(-1));
     proc.querySelector('[data-next]')!.addEventListener('click', () => go(1));
+
+    // Horizontal swipe on the box steps too; vertical drags stay page scroll (touch-action: pan-y).
+    const stage = proc.querySelector<HTMLElement>('.stage')!;
+    let x0 = 0, y0 = 0;
+    stage.addEventListener('pointerdown', (e) => { x0 = e.clientX; y0 = e.clientY; });
+    stage.addEventListener('pointerup', (e) => {
+      const dx = e.clientX - x0, dy = e.clientY - y0;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
+    });
+  }
+
+  // Phone WhatsApp bar: hidden over the hero, the service picker, the contact block and the footer, which carry their own WhatsApp links.
+  const dock = document.querySelector<HTMLElement>('[data-dock]');
+  if (dock) {
+    const seen = new Set<Element>();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) e.isIntersecting ? seen.add(e.target) : seen.delete(e.target);
+      dock.classList.toggle('on', seen.size === 0);
+    });
+    for (const sel of ['.hero', '#layanan', '#kontak', 'footer']) io.observe(document.querySelector(sel)!);
   }
 </script>
