@@ -97,7 +97,6 @@ const id = {
   footer: {
     chat: 'Chat WhatsApp ↗',
     rights: '© 2026 PT Tantra Hachi Group. All rights reserved',
-    photos: 'Foto: Wikimedia Commons (CC BY-SA)',
   },
   notFound: {
     title: 'Halaman tidak ditemukan',
@@ -187,7 +186,6 @@ const en: typeof id = {
   footer: {
     chat: 'Chat on WhatsApp ↗',
     rights: '© 2026 PT Tantra Hachi Group. All rights reserved',
-    photos: 'Photos: Wikimedia Commons (CC BY-SA)',
   },
   notFound: {
     title: 'Page not found',
