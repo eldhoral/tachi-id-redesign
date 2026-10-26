@@ -1,11 +1,12 @@
 ---
 import { Image, Picture } from 'astro:assets';
 import { copy, wa, STEP_TILT, PHONE_DISPLAY, EMAIL, type Lang } from '../i18n';
-import trucks from '../assets/photos/trucks-trans-sumatra.webp';
+import logistics from '../assets/photos/logistics.webp';
+import ads from '../assets/photos/ads.webp';
 import mpv from '../assets/photos/mpv.webp';
+import foodworks from '../assets/photos/foodworks.webp';
 import sabang from '../assets/photos/balohan-sabang.webp';
 import tugu from '../assets/photos/tugu-0km.webp';
-import mark from '../assets/logo-mark-white.png';
 import pertamina from '../assets/clients/pertamina.jpg';
 import siemens from '../assets/clients/siemens.jpg';
 import mayora from '../assets/clients/mayora.jpg';
@@ -31,6 +32,9 @@ const T = [1,1,1,1,1, 0,0,1,0,0, 0,0,1,0,0, 0,0,1,2,3, 0,0,1,0,0, 0,0,1,0,0, 0,0
 const fill = ['transparent', 'var(--ac)', '#0B2E66', '#1E1E1E', '#9CC3F0'];
 
 const tileSizes = '(max-width: 900px) 100vw, 513px';
+// One photo per unit, in the order of t.units.items. Logistics, Ads and Foodworks are Unsplash
+// (free licence, no credit required): OYtFO_heZ1Y, CGpifH3FjOA, yvzzemH8-J0.
+const unitPhotos = [logistics, ads, mpv, foodworks];
 ---
 <div class="k">
   <a class="skip" href="#main">{t.skip}</a>
@@ -167,11 +171,8 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
         <h2 class="state units-title">{t.units.title}</h2>
         {t.units.items.map((u, i) => (
           <article class="case">
-            <div class="tile" style={i === 3 ? 'background: #1E1E1E' : undefined} data-reveal={i === 0 || i === 2 ? '' : undefined}>
-              {i === 0 && <Picture src={trucks} alt={t.units.alt.trucks} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />}
-              {i === 1 && <span class="acc" style="font-size: 150px; letter-spacing: -.06em; line-height: 1">Ads</span>}
-              {i === 2 && <Picture src={mpv} alt={t.units.alt.mpv} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />}
-              {i === 3 && <Image src={mark} alt="" width={110} densities={[1, 2]} style="width: 110px; height: 110px; opacity: .5" />}
+            <div class="tile" data-reveal>
+              <Picture src={unitPhotos[i]} alt={u.alt} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />
             </div>
             <div class="body">
               <h3>{u.name}<sup>{u.tag}</sup></h3>
