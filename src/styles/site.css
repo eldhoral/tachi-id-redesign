@@ -31,8 +31,12 @@ a:hover{opacity:.8}
 .lang [aria-current]{text-decoration:underline;text-underline-offset:6px}
 .hero .lead{margin:0;font-size:clamp(26px,2.6vw,38px);line-height:1.12;letter-spacing:-.025em;max-width:19ch;text-wrap:pretty}
 .hero h1{margin:auto 0 0;padding-left:30px;font-size:31vw;transform:translateY(14%)}
+.intro{gap:24px;margin-top:56px}
+.hero-cta{display:none}
 
 /* statement + pixel T */
+.statement{padding:150px 0 140px}
+.points{margin-top:140px;align-items:center}
 .px{display:grid;grid-template-columns:repeat(5,40px);gap:24px;margin-left:clamp(0px,15vw,216px)}
 .px span{width:40px;height:40px;animation:pop 600ms cubic-bezier(.23,1,.32,1) both}
 @keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
@@ -44,6 +48,7 @@ a:hover{opacity:.8}
 .stats p{margin:0}
 .stat-label{font-size:20px}
 .stat-value{margin-top:6px!important;font-size:64px;line-height:1;letter-spacing:-.04em}
+.clients-h{margin:120px 0 0;font-size:20px;font-weight:400;border-bottom:1px solid #333;padding-bottom:20px}
 .logos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
 .logos>div{height:190px;display:flex;align-items:center;justify-content:center;border-right:1px solid #333;border-bottom:1px solid #333}
 .logos>div:nth-child(5n){border-right:0}
@@ -53,6 +58,10 @@ a:hover{opacity:.8}
 
 /* services */
 .services{background:#FFFFFF;margin-top:16px;padding-top:50px}
+.svc-title{margin:0 0 90px;font-size:26px;font-weight:400;line-height:1.2;max-width:18ch}
+.services .left{padding-right:40px;border-right:1px solid #E2E2E2;padding-bottom:60px}
+.services .right{padding:0 0 60px 40px;display:flex;flex-direction:column;justify-content:center;gap:48px}
+.panel{display:flex;flex-direction:column;gap:48px}
 .svc{display:block;background:none;border:0;padding:0;font:inherit;text-align:left;cursor:pointer;font-size:clamp(40px,4.6vw,68px);line-height:1.12;letter-spacing:-.035em;color:#8A8A8A;transition:color 250ms ease}
 .svc[aria-pressed="true"]{color:#1E1E1E}
 .blocks{display:grid;grid-template-columns:repeat(3,120px);align-self:center}
@@ -76,11 +85,13 @@ a:hover{opacity:.8}
 .navbtn:active{transform:scale(.95)}
 
 /* units */
+.units{padding:150px 0 60px}
+.units-title{font-size:clamp(56px,7.4vw,112px);line-height:.96;max-width:10ch;margin-bottom:110px}
 .case{display:grid;grid-template-columns:minmax(0,513px) minmax(0,1fr);gap:24px 115px;padding:30px 0;border-top:1px solid #D4D4D4}
 .case:last-child{border-bottom:1px solid #D4D4D4}
 .case .body{display:flex;flex-direction:column;gap:40px}
 .case h3,.big{margin:0;font-size:clamp(44px,4.6vw,68px);font-weight:400;letter-spacing:-.04em;line-height:1}
-.case sup{font-size:20px;letter-spacing:0;vertical-align:top;margin-left:6px}
+.case sup{font-size:20px;letter-spacing:0;vertical-align:top;margin-left:6px;white-space:nowrap}
 .case .body p{margin:0;max-width:30ch;font-size:20px}
 .case .body a{font-size:20px;align-self:flex-start}
 .tile{background:#FFFFFF;height:300px;display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -92,24 +103,95 @@ a:hover{opacity:.8}
 /* contact + footer */
 .contact{background:var(--ac);color:var(--on);padding:60px 0;margin-top:40px}
 .contact .line{display:flex;flex-wrap:wrap;gap:24px 64px;margin-top:80px;font-size:22px;align-items:baseline}
+.foot{padding-top:90px;padding-bottom:30px}
+.foot-row{border-top:1px solid #D4D4D4;margin-top:70px;padding-top:30px}
+.foot-legal{border-top:1px solid #D4D4D4;margin-top:90px;padding-top:24px;font-size:16px}
+.dock{display:none}
 .foot-nav{font-size:30px;letter-spacing:-.02em;display:grid}
 .foot-nav>:first-child{border-top:0;padding-top:0}
 .foot-nav>:last-child{border-bottom:0}
 
-@media (prefers-reduced-motion:reduce){.px span{animation:none}.box,.svc,.logos img{transition:none}}
+@media (prefers-reduced-motion:reduce){.px span{animation:none}.box,.svc,.logos img,.dock{transition:none!important}}
 @media (max-width:900px){
-  .pad{padding-left:20px;padding-right:20px}
+  .pad{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
   .inset{margin:0 8px}
   .two,.case,.three,.stats{grid-template-columns:minmax(0,1fr)}
-  .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .logos>div{border-right:1px solid #333!important;height:130px}
-  .logos img{height:80px}
-  .logos img.short{height:60px}
   .hide-sm{display:none!important}
-  .px{grid-template-columns:repeat(5,28px);gap:14px}
+
+  /* hero: one screen, wordmark sized to the width, the WhatsApp action inside thumb reach */
+  .hero{min-height:100vh;min-height:100svh}
+  .hero header{padding-top:max(24px,env(safe-area-inset-top));font-size:18px;gap:12px}
+  .hero header>div{flex-wrap:nowrap!important}
+  .intro{margin-top:40px}
+  .hero .lead{font-size:28px;line-height:1.14;max-width:16ch}
+  .hero-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:32px;min-height:56px;padding:0 20px;background:#FFFFFF;color:#1E1E1E;text-decoration:none;font-size:20px;letter-spacing:-.02em}
+  .hero h1{padding-left:12px;font-size:calc((100vw - 24px) / 2.62);transform:translateY(12%);margin-top:48px} /* "Tachi" + "Group" measure 2.59em */
+
+  .statement{padding:72px 0 64px}
+  .points{margin-top:48px;gap:40px}
+  .px{grid-template-columns:repeat(5,28px);gap:14px;margin-left:0}
   .px span{width:28px;height:28px}
-  .extra{border-right:0!important;border-bottom:1px solid #E2E2E2;padding:48px 10px}
-  .services .left{border-right:0!important;padding-right:0!important}
-  .services .right{padding-left:0!important}
-  .blocks{grid-template-columns:repeat(3,80px)}
+  .points .rows{font-size:22px!important}
+  .rows>*{padding:16px 0}
+
+  .dark{padding:48px 0 24px}
+  .stats{margin-top:48px;padding-top:28px;gap:28px}
+  .stat-value{font-size:52px}
+  .clients-h{margin-top:56px;padding-bottom:16px}
+  .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .logos>div{height:120px;border-right:1px solid #333!important}
+  .logos>div:nth-child(2n){border-right:0!important}
+  .logos img{height:76px;opacity:.8}
+  .logos img.short{height:56px}
+
+  .services{padding-top:32px}
+  .svc-title{margin-bottom:28px}
+  .services .left{border-right:0;padding:0 0 24px}
+  .services .right{padding:24px 0 40px;border-top:1px solid #E2E2E2;gap:0}
+  .svc{font-size:40px;padding:2px 0}
+  .blocks{display:none}
+  .panel{gap:20px}
+  .panel p:last-child{font-size:24px!important}
+  .extra{border-right:0!important;border-bottom:1px solid #E2E2E2;padding:28px 0;font-size:32px}
+  .extra:last-child{border-bottom:0}
+
+  .process{margin-top:16px;padding:56px 0 72px}
+  .process .two{gap:40px}
+  .stage{perspective:2400px;touch-action:pan-y;padding:0 12px 0 26px}
+  .step p{font-size:17px}
+
+  .units{padding:72px 0 24px}
+  .units-title{font-size:48px;margin-bottom:32px}
+  .case{padding:20px 0 28px;gap:20px}
+  .case .body{gap:16px}
+  .case h3{font-size:40px}
+  .case .body p{font-size:18px}
+  .tile{height:auto;aspect-ratio:4/3}
+  .tile .acc{font-size:120px!important}
+  .chat{height:168px}
+  .chat .ul{font-size:28px!important}
+  .pair{margin-top:24px}
+
+  .contact{margin-top:24px;padding:48px 0}
+  .contact .line{margin-top:32px;flex-direction:column;gap:8px;font-size:18px}
+  .foot{padding-top:56px;padding-bottom:max(24px,env(safe-area-inset-bottom))}
+  .foot-row{margin-top:40px;padding-top:24px}
+  .foot-nav{font-size:26px}
+  .foot-legal{margin-top:48px}
+
+  /* thumb-reach WhatsApp bar, only between the hero and the contact block */
+  .dock{display:flex;position:fixed;z-index:5;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));min-height:56px;padding:0 20px;align-items:center;justify-content:space-between;gap:16px;background:var(--ac);color:var(--on);text-decoration:none;font-size:20px;letter-spacing:-.02em;box-shadow:0 12px 32px -12px rgba(9,40,90,.55);transform:translateY(calc(100% + 24px));visibility:hidden;transition:transform 500ms cubic-bezier(.23,1,.32,1),visibility 0s 500ms}
+  .dock.on{transform:none;visibility:visible;transition:transform 500ms cubic-bezier(.23,1,.32,1),visibility 0s}
+
+  /* 44px tap targets on text links */
+  .tap,.hero nav a,.lang a{display:inline-block;padding-block:10px}
+  .hero nav,.lang{margin-block:-10px}
+  .lang a{padding-inline:8px;margin-inline:-8px}
+}
+
+/* touch: 44px targets and pressed feedback instead of hover */
+@media (pointer:coarse){
+  .k a,.k button{-webkit-tap-highlight-color:transparent}
+  .k a:active,.svc:active{opacity:.6}
+  .hero-cta:active,.dock:active{opacity:1;transform:scale(.98)}
 }
