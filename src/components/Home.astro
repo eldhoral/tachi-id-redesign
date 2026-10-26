@@ -1,0 +1,252 @@
+---
+import { Image, Picture } from 'astro:assets';
+import { copy, wa, STEP_TILT, PHONE_DISPLAY, EMAIL, type Lang } from '../i18n';
+import trucks from '../assets/photos/trucks-trans-sumatra.webp';
+import mpv from '../assets/photos/mpv.webp';
+import sabang from '../assets/photos/balohan-sabang.webp';
+import tugu from '../assets/photos/tugu-0km.webp';
+import mark from '../assets/logo-mark-white.png';
+import pertamina from '../assets/clients/pertamina.jpg';
+import siemens from '../assets/clients/siemens.jpg';
+import mayora from '../assets/clients/mayora.jpg';
+import hitachi from '../assets/clients/hitachi.jpg';
+import indorama from '../assets/clients/indorama.jpg';
+import pancaTraktor from '../assets/clients/panca-traktor.jpg';
+import kbn from '../assets/clients/kbn.jpg';
+import samudera from '../assets/clients/samudera.jpg';
+import dimCargo from '../assets/clients/dim-cargo.jpg';
+import infinith from '../assets/clients/infinith.png';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = copy[lang];
+
+const clients = [
+  [pertamina, 'Pertamina'], [siemens, 'Siemens'], [mayora, 'Mayora'], [hitachi, 'Hitachi'], [indorama, 'Indorama'],
+  [pancaTraktor, 'Panca Traktor'], [kbn, 'KBN'], [samudera, 'Samudera'], [dimCargo, 'DIM Cargo'], [infinith, 'Infinith'],
+] as const;
+
+// Pixel "T" from the Tachi mark: 1 accent, 2 dark accent, 3 ink, 4 pale.
+const T = [1,1,1,1,1, 0,0,1,0,0, 0,0,1,0,0, 0,0,1,2,3, 0,0,1,0,0, 0,0,1,0,0, 0,0,4,0,0];
+const fill = ['transparent', 'var(--ac)', '#0B2E66', '#1E1E1E', '#9CC3F0'];
+
+const tileSizes = '(max-width: 900px) 100vw, 513px';
+---
+<div class="k">
+  <a class="skip" href="#main">{t.skip}</a>
+
+  <section class="hero" id="top">
+    <header class="pad two">
+      <span>{t.slogan}</span>
+      <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+        <nav aria-label={t.nav.label}>
+          <a href="#unit" class="plain">{t.nav.units}</a>
+          <a href="#layanan" class="plain hide-sm">{t.nav.services}</a>
+        </nav>
+        <div class="tools">
+          <span class="lang hide-sm">
+            {lang === 'id'
+              ? <><span aria-current="page">ID</span> / <a href="/en/" hreflang="en" lang="en" class="plain">EN</a></>
+              : <><a href="/" hreflang="id" lang="id" class="plain">ID</a> / <span aria-current="page">EN</span></>}
+          </span>
+          <a href={wa()} class="ul">{t.nav.cta}</a>
+        </div>
+      </div>
+    </header>
+    <div class="pad two" style="gap: 24px; margin-top: 56px">
+      <span aria-hidden="true" class="hide-sm"></span>
+      <p class="lead">{t.heroLead}</p>
+    </div>
+    <h1 class="huge"><span>Tachi</span><small>Group</small></h1>
+  </section>
+
+  <main id="main">
+    <section style="padding: 150px 0 140px">
+      <div class="pad">
+        <h2 class="state" style="max-width: 15ch">{t.statement}</h2>
+        <div class="two" style="margin-top: 140px; align-items: center">
+          <div aria-hidden="true" class="px">
+            {T.map((v, i) => <span style={`background:${fill[v]};animation-delay:${i * 45}ms`}></span>)}
+          </div>
+          <ul class="rows" style="list-style: none; margin: 0; padding: 0; font-size: 26px; letter-spacing: -.02em">
+            {t.points.map((p) => <li>{p}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="inset dark">
+      <div class="pad">
+        <h2 class="state" style="max-width: 17ch">{t.dark.title}</h2>
+        <div class="stats">
+          <div>
+            <p class="stat-label">{t.dark.unitsLabel}</p>
+            <p class="acc" style="margin-top: 10px; display: flex; align-items: flex-start; gap: 16px">
+              <span style="font-size: clamp(160px, 22vw, 330px); line-height: .78; letter-spacing: -.06em">4</span>
+              <span style="font-size: clamp(36px, 4vw, 60px); letter-spacing: -.03em; margin-top: 12px">{t.dark.unitWord}</span>
+            </p>
+          </div>
+          <div style="display: grid; gap: 36px">
+            {t.dark.stats.map((s) => <div><p class="stat-label">{s.label}</p><p class="acc stat-value">{s.value}</p></div>)}
+            <div><p class="stat-label">{t.dark.reachLabel}</p><p class="acc stat-value" style="font-size: 40px; line-height: 1.05; letter-spacing: -.03em">{t.dark.reach}</p></div>
+          </div>
+        </div>
+        <h2 id="klien" style="margin: 120px 0 0; font-size: 20px; font-weight: 400; border-bottom: 1px solid #333; padding-bottom: 20px">{t.dark.clients}</h2>
+        <div class="logos">
+          {clients.map(([src, alt]) => (
+            <div><Image src={src} alt={alt} height={alt === 'Infinith' ? 80 : 110} densities={[1, 2]} class={alt === 'Infinith' ? 'short' : undefined} /></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="layanan" class="inset services" data-services>
+      <div class="pad two" style="gap: 0">
+        <div class="left" style="padding-right: 40px; border-right: 1px solid #E2E2E2; padding-bottom: 60px">
+          <h2 class="acc" style="margin: 0 0 90px; font-size: 26px; font-weight: 400; line-height: 1.2; max-width: 18ch">{t.services.title}</h2>
+          <div role="group" aria-label={t.services.groupLabel}>
+            {t.services.items.map((s, i) => (
+              <button type="button" class="svc" data-i={i} aria-pressed={i === 0 ? 'true' : 'false'}>{s.label}</button>
+            ))}
+          </div>
+        </div>
+        <div class="right" style="padding: 0 0 60px 40px; display: flex; flex-direction: column; justify-content: center; gap: 48px">
+          <div aria-hidden="true" class="blocks">
+            <span></span><span style="background: #1E1E1E"></span><span></span>
+            <span></span><span style="background: #FFFFFF"></span><span></span>
+          </div>
+          <div aria-live="polite">
+            {t.services.items.map((s, i) => (
+              <div data-panel={i} hidden={i !== 0} style="display: flex; flex-direction: column; gap: 48px">
+                <div>
+                  <p style="margin: 0 0 6px; font-size: 18px; color: #6B6B6B">{s.unit}</p>
+                  <p style="margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.02em; max-width: 22ch">{s.text}</p>
+                </div>
+                <a href={wa(t.services.message(s.unit, s.label))} class="ul acc" style="font-size: 22px; align-self: flex-start">{t.services.ask}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="pad three" style="border-top: 1px solid #E2E2E2">
+        {t.services.extras.map(([a, b]) => <div class="extra">{a}<br>{b}</div>)}
+      </div>
+    </section>
+
+    <section class="process" data-process>
+      <div class="pad two" style="align-items: center">
+        <div>
+          <h2 class="state" style="max-width: 11ch">{t.process.title}</h2>
+          <div style="display: flex; gap: 14px; margin-top: 48px; align-items: center">
+            <button type="button" class="navbtn" data-prev aria-label={t.process.prev}>←</button>
+            <button type="button" class="navbtn" data-next aria-label={t.process.next}>→</button>
+            <span style="margin-left: 12px; font-size: 20px" data-label>1 / {t.process.steps.length}</span>
+          </div>
+        </div>
+        <div class="stage">
+          <div class="box" data-box style={`transform:${STEP_TILT[0]}`} aria-live="polite">
+            {t.process.steps.map((s, i) => (
+              <div class="step" data-step={i} data-tf={STEP_TILT[i]} hidden={i !== 0}>
+                <h3>{s.title}</h3>
+                <div><span class="acc n">{i + 1}</span><p>{s.text}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="unit" style="padding: 150px 0 60px">
+      <div class="pad">
+        <h2 class="state" style="font-size: clamp(56px, 7.4vw, 112px); line-height: .96; max-width: 10ch; margin-bottom: 110px">{t.units.title}</h2>
+        {t.units.items.map((u, i) => (
+          <article class="case">
+            <div class="tile" style={i === 3 ? 'background: #1E1E1E' : undefined}>
+              {i === 0 && <Picture src={trucks} alt={t.units.alt.trucks} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />}
+              {i === 1 && <span class="acc" style="font-size: 150px; letter-spacing: -.06em; line-height: 1">Ads</span>}
+              {i === 2 && <Picture src={mpv} alt={t.units.alt.mpv} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />}
+              {i === 3 && <Image src={mark} alt="" width={110} densities={[1, 2]} style="width: 110px; height: 110px; opacity: .5" />}
+            </div>
+            <div class="body">
+              <h3>{u.name}<sup>{u.tag}</sup></h3>
+              <p>{u.text}</p>
+              <a href={wa(t.units.hello(u.name))} class="ul acc">{u.cta}</a>
+            </div>
+          </article>
+        ))}
+        <div class="case">
+          <a href={wa()} class="chat">
+            <svg aria-hidden="true" viewBox="0 0 44 24" width="44" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
+            <span class="ul" style="font-size: 32px; letter-spacing: -.02em">{t.units.chat}</span>
+          </a>
+          <div>
+            <p class="big">{t.units.ship[0]}<br>{t.units.ship[1]}</p>
+            <div class="pair">
+              <Picture src={sabang} alt={t.units.alt.sabang} formats={['avif']} fallbackFormat="webp" width={600} widths={[300, 600]} sizes="(max-width: 900px) 50vw, 254px" />
+              <Picture src={tugu} alt={t.units.alt.tugu} formats={['avif']} fallbackFormat="webp" width={600} widths={[300, 600]} sizes="(max-width: 900px) 50vw, 254px" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontak" class="inset contact">
+      <div class="pad">
+        <h2 class="state" style="font-size: clamp(48px, 6.4vw, 96px); line-height: .98; max-width: 14ch">{t.cta}</h2>
+        <div class="line">
+          <a href={wa()} class="ul" style="font-size: 32px">{PHONE_DISPLAY}</a>
+          <a href={`mailto:${EMAIL}`} class="plain">{EMAIL}</a>
+          <span>{t.address}</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pad" style="padding-top: 90px; padding-bottom: 30px">
+    <p aria-hidden="true" class="huge acc" style="margin: 0; font-size: 27vw"><span>Tachi</span><small style="margin-top: .05em">Group</small></p>
+    <div class="two" style="border-top: 1px solid #D4D4D4; margin-top: 70px; padding-top: 30px">
+      <a href={wa()} class="ul acc" style="font-size: 30px; align-self: start">{t.footer.chat}</a>
+      <nav aria-label={t.nav.footer} class="rows foot-nav">
+        <a href="#unit" class="plain">{t.nav.units}</a>
+        <a href="#layanan" class="plain">{t.nav.services}</a>
+        <a href="#klien" class="plain">{t.nav.clients}</a>
+        <a href="#kontak" class="plain">{t.nav.contact}</a>
+      </nav>
+    </div>
+    <div class="two" style="border-top: 1px solid #D4D4D4; margin-top: 90px; padding-top: 24px; font-size: 16px">
+      <span>{t.footer.rights}</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Service picker: hover, focus or click shows that service's panel.
+  const services = document.querySelector('[data-services]');
+  if (services) {
+    const buttons = services.querySelectorAll<HTMLButtonElement>('[data-i]');
+    const panels = services.querySelectorAll<HTMLElement>('[data-panel]');
+    const pick = (e: Event) => {
+      const i = (e.currentTarget as HTMLElement).dataset.i;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.i === i)));
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== i));
+    };
+    for (const b of buttons) for (const ev of ['click', 'pointerenter', 'focus']) b.addEventListener(ev, pick);
+  }
+
+  // Process carousel: one step at a time, the box tilts per step.
+  const proc = document.querySelector('[data-process]');
+  if (proc) {
+    const box = proc.querySelector<HTMLElement>('[data-box]')!;
+    const label = proc.querySelector<HTMLElement>('[data-label]')!;
+    const steps = [...proc.querySelectorAll<HTMLElement>('[data-step]')];
+    let at = 0;
+    const go = (d: number) => {
+      at = (at + d + steps.length) % steps.length;
+      steps.forEach((s, k) => (s.hidden = k !== at));
+      box.style.transform = steps[at].dataset.tf!;
+      label.textContent = `${at + 1} / ${steps.length}`;
+    };
+    proc.querySelector('[data-prev]')!.addEventListener('click', () => go(-1));
+    proc.querySelector('[data-next]')!.addEventListener('click', () => go(1));
+  }
+</script>

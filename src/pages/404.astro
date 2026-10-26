@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { copy } from '../i18n';
+const { id, en } = copy;
+---
+<Base lang="id" title={`${id.notFound.title} | Tachi Group`} description={id.notFound.text} noindex>
+  <main class="k hero" style="min-height: 100vh">
+    <div class="pad" style="padding-top: 40px; display: flex; flex-direction: column; gap: 24px; font-size: 22px">
+      <h1 class="state">{id.notFound.title}</h1>
+      <p style="margin: 0">{id.notFound.text}</p>
+      <a href="/" class="ul">{id.notFound.home}</a>
+      <p lang="en" style="margin: 24px 0 0; opacity: .8">{en.notFound.title}. <a href="/en/" class="ul">{en.notFound.home}</a></p>
+    </div>
+    <p aria-hidden="true" class="huge" style="margin: auto 0 0; padding-left: 30px; font-size: 31vw; transform: translateY(14%)"><span>404</span></p>
+  </main>
+</Base>
