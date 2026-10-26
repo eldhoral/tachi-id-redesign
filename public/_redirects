@@ -1,0 +1,24 @@
+# Old WordPress URLs (www.tachi.id sitemap, October 2026) -> sections of the new page.
+# www -> apex is a Cloudflare Redirect Rule (see README), because static assets are
+# served before the Worker runs.
+/logistic       /#unit     301
+/logistic/      /#unit     301
+/ads            /#unit     301
+/ads/           /#unit     301
+/foodworks      /#unit     301
+/foodworks/     /#unit     301
+/grupbisnis     /#unit     301
+/grupbisnis/    /#unit     301
+/klien-kami     /#klien    301
+/klien-kami/    /#klien    301
+/kontak         /#kontak   301
+/kontak/        /#kontak   301
+/tentang-kami   /          301
+/tentang-kami/  /          301
+/brand-identity           /   301
+/brand-identity/          /   301
+/struktur-organisasi      /   301
+/struktur-organisasi/     /   301
+/2025/10/28/hello-world/  /   301
+/category/*               /   301
+/feed/                    /   301

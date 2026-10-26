@@ -1,9 +1,15 @@
-// Static assets only: Cloudflare serves dist/ from its edge, no Worker code runs.
+// Cloudflare serves dist/ from its edge. worker.js only handles /api/wa (WhatsApp click
+// counting); every other path is a static asset, or the 404 page.
 {
   "name": "tachi-id",
+  "main": "worker.js",
   "compatibility_date": "2026-10-26",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
-  }
+  },
+  "analytics_engine_datasets": [
+    { "binding": "CLICKS", "dataset": "tachi_whatsapp_clicks" }
+  ]
 }

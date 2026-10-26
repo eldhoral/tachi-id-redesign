@@ -4,6 +4,8 @@ import latin from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght
 import latinExt from '@fontsource-variable/inter-tight/files/inter-tight-latin-ext-wght-normal.woff2?url';
 import { getImage } from 'astro:assets';
 import ogSource from '../assets/photos/logistics.webp';
+import mark from '../assets/tachi-mark.png';
+import { EMAIL } from '../i18n';
 import type { Lang } from '../i18n';
 
 interface Props {
@@ -17,6 +19,39 @@ const { lang, title, description, noindex = false } = Astro.props;
 const site = Astro.site!;
 const canonical = new URL(Astro.url.pathname, site).href;
 const og = await getImage({ src: ogSource, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const logo = await getImage({ src: mark, width: 512, format: 'png' });
+
+// Organization data for search engines. Foodworks is left out until it operates.
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Tachi Group',
+  legalName: 'PT Tantra Hachi Group',
+  slogan: 'Stronger Together',
+  url: new URL('/', site).href,
+  logo: new URL(logo.src, site).href,
+  email: EMAIL,
+  telephone: '+62-811-1184-0091',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Jl. Perum Villa Indah Permai Blok E6 No.33, RT.7/RW.33, Teluk Pucung',
+    addressLocality: 'Kota Bekasi',
+    addressRegion: 'Jawa Barat',
+    postalCode: '17121',
+    addressCountry: 'ID',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+62-811-1184-0091',
+    contactType: 'customer service',
+    availableLanguage: ['Indonesian', 'English'],
+  },
+  subOrganization: ['Tachi Logistics', 'Tachi Ads', 'Tachi Garage'].map((name) => ({ '@type': 'Organization', name })),
+};
+
+// Cloudflare Web Analytics (cookieless). Set PUBLIC_CF_ANALYTICS_TOKEN in the Cloudflare build
+// variables to switch it on; without it no script is added.
+const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
 
 // Only latin and latin-ext are needed for Indonesian and English copy.
 const fontFaces = [
@@ -52,6 +87,8 @@ const fontFaces = [
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
+  {!noindex && <script type="application/ld+json" set:html={JSON.stringify(org)} />}
+  {analyticsToken && <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: analyticsToken })} />}
 </head>
 <body>
   <slot />

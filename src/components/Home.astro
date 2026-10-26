@@ -34,6 +34,8 @@ const T = [1,1,1,1,1, 0,0,1,0,0, 0,0,1,0,0, 0,0,1,2,3, 0,0,1,0,0, 0,0,1,0,0, 0,0
 const fill = ['transparent', 'var(--ac)', '#0B2E66', '#1E1E1E', '#9CC3F0'];
 
 const tileSizes = '(max-width: 900px) 100vw, 513px';
+// Unit key for click counting: 'Tachi Logistics' -> 'logistics'.
+const slug = (name: string) => name.split(' ')[1].toLowerCase();
 // One photo per unit, in the order of t.units.items. Logistics, Ads and Foodworks are Unsplash
 // (free licence, no credit required): OYtFO_heZ1Y, CGpifH3FjOA, yvzzemH8-J0.
 const unitPhotos = [logistics, ads, mpv, foodworks];
@@ -58,7 +60,7 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
               ? <><span aria-current="page">ID</span> / <a href="/en/" hreflang="en" lang="en" class="plain">EN</a></>
               : <><a href="/" hreflang="id" lang="id" class="plain">ID</a> / <span aria-current="page">EN</span></>}
           </span>
-          <a href={wa()} class="ul hide-sm">{t.nav.cta}</a>
+          <a href={wa()} class="ul hide-sm" data-wa="group:nav">{t.nav.cta}</a>
         </div>
       </div>
     </header>
@@ -66,7 +68,7 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
       <span aria-hidden="true" class="hide-sm"></span>
       <div>
         <p class="lead">{t.heroLead}</p>
-        <a href={wa()} class="hero-cta only-sm">
+        <a href={wa()} class="hero-cta only-sm" data-wa="group:hero">
           <span>{t.nav.cta}</span>
           <svg aria-hidden="true" viewBox="0 0 44 24" width="32" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
         </a>
@@ -137,7 +139,7 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
                   <p style="margin: 0 0 6px; font-size: 18px; color: #6B6B6B">{s.unit}</p>
                   <p style="margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.02em; max-width: 22ch">{s.text}</p>
                 </div>
-                <a href={wa(t.services.message(s.unit, s.label))} class="ul acc tap" style="font-size: 22px; align-self: flex-start">{t.services.ask}</a>
+                <a href={wa(t.services.message(s.unit, s.label))} data-wa={`${slug(s.unit)}:services`} class="ul acc tap" style="font-size: 22px; align-self: flex-start">{t.services.ask}</a>
               </div>
             ))}
           </div>
@@ -182,12 +184,12 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
             <div class="body">
               <h3>{u.name}<sup>{u.tag}</sup></h3>
               <p>{u.text}</p>
-              <a href={wa(t.units.hello(u.name))} class="ul acc tap">{u.cta}</a>
+              <a href={wa(t.units.hello(u.name))} class="ul acc tap" data-wa={`${slug(u.name)}:units`}>{u.cta}</a>
             </div>
           </article>
         ))}
         <div class="case">
-          <a href={wa()} class="chat">
+          <a href={wa()} class="chat" data-wa="group:chat">
             <svg aria-hidden="true" viewBox="0 0 44 24" width="44" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
             <span class="ul" style="font-size: 32px; letter-spacing: -.02em">{t.units.chat}</span>
           </a>
@@ -214,7 +216,7 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
       <div class="pad">
         <h2 class="state" style="font-size: clamp(48px, 6.4vw, 96px); line-height: .98; max-width: 14ch">{t.cta}</h2>
         <div class="line">
-          <a href={wa()} class="ul tap" style="font-size: 32px">{PHONE_DISPLAY}</a>
+          <a href={wa()} class="ul tap" style="font-size: 32px" data-wa="group:contact">{PHONE_DISPLAY}</a>
           <a href={`mailto:${EMAIL}`} class="plain tap">{EMAIL}</a>
           <span>{t.address}</span>
         </div>
@@ -225,7 +227,7 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
   <footer class="pad foot">
     <p aria-hidden="true" class="huge acc lockup"><Image src={mark} alt="" width={290} densities={[1, 2]} /><span>Tachi</span><small style="margin-top: .05em">Group</small></p>
     <div class="two foot-row">
-      <a href={wa()} class="ul acc tap" style="font-size: 30px; align-self: start">{t.footer.chat}</a>
+      <a href={wa()} class="ul acc tap" style="font-size: 30px; align-self: start" data-wa="group:footer">{t.footer.chat}</a>
       <nav aria-label={t.nav.footer} class="rows foot-nav">
         <a href="#unit" class="plain">{t.nav.units}</a>
         <a href="#layanan" class="plain">{t.nav.services}</a>
@@ -238,13 +240,22 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
     </div>
   </footer>
 
-  <a href={wa()} class="dock" data-dock>
+  <a href={wa()} class="dock" data-dock data-wa="group:dock">
     <span>{t.units.chat}</span>
     <svg aria-hidden="true" viewBox="0 0 44 24" width="32" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
   </a>
 </div>
 
 <script>
+  // Count WhatsApp clicks (unit + button + language) via the Worker; sendBeacon survives the
+  // navigation to wa.me. Nothing personal is sent.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element).closest<HTMLAnchorElement>('a[data-wa]');
+    if (!a) return;
+    const [unit, place] = a.dataset.wa!.split(':');
+    navigator.sendBeacon?.('/api/wa', JSON.stringify({ unit, place, lang: document.documentElement.lang }));
+  });
+
   // Service picker: hover, focus or click shows that service's panel.
   const services = document.querySelector('[data-services]');
   if (services) {
