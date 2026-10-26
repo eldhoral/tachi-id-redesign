@@ -3,7 +3,6 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:#EFEFEF}
 a{color:inherit}
-a:hover{opacity:.8}
 [hidden]{display:none!important}
 :focus-visible{outline:2px solid currentColor;outline-offset:4px}
 
@@ -38,8 +37,7 @@ a:hover{opacity:.8}
 .statement{padding:150px 0 140px}
 .points{margin-top:140px;align-items:center}
 .px{display:grid;grid-template-columns:repeat(5,40px);gap:24px;margin-left:clamp(0px,15vw,216px)}
-.px span{width:40px;height:40px;animation:pop 600ms cubic-bezier(.23,1,.32,1) both}
-@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+.px span{width:40px;height:40px}
 
 /* dark panel */
 .dark{background:#1E1E1E;color:#FFFFFF;padding:72px 0 32px}
@@ -54,7 +52,6 @@ a:hover{opacity:.8}
 .logos>div:nth-child(5n){border-right:0}
 .logos img{height:110px;width:auto;filter:grayscale(1) invert(1);mix-blend-mode:screen;opacity:.6;transition:opacity 200ms ease}
 .logos img.short{height:80px}
-.logos>div:hover img{opacity:1}
 
 /* services */
 .services{background:#FFFFFF;margin-top:16px;padding-top:50px}
@@ -74,15 +71,14 @@ a:hover{opacity:.8}
 /* process */
 .process{background:var(--ac);color:var(--on);margin-top:120px;padding:120px 0 140px}
 .stage{perspective:1400px;display:flex;justify-content:center}
-.box{width:min(100%,520px);aspect-ratio:1/1;background:#1E1E1E;color:#FFFFFF;padding:22px;display:flex;flex-direction:column;transition:transform 900ms cubic-bezier(.23,1,.32,1);transform-style:preserve-3d;box-shadow:-26px 18px 0 -2px #121212}
+.box{width:min(100%,520px);aspect-ratio:1/1;background:#1E1E1E;color:#FFFFFF;padding:22px;display:flex;flex-direction:column;transition:transform 600ms var(--ease-in-out);transform-style:preserve-3d;box-shadow:-26px 18px 0 -2px #121212;cursor:grab;user-select:none}
+.box.dragging{transition:none;cursor:grabbing}
 .step{display:flex;flex-direction:column;flex:1}
 .step h3{margin:0;padding-bottom:18px;border-bottom:1px solid #333;font-size:clamp(30px,3vw,44px);font-weight:400;letter-spacing:-.03em}
 .step div{margin-top:auto;display:grid;grid-template-columns:1fr 1.6fr;align-items:end;gap:20px}
 .step .n{font-size:clamp(90px,9vw,130px);line-height:.8;letter-spacing:-.05em}
 .step p{margin:0;font-size:19px;line-height:1.3}
-.navbtn{width:56px;height:56px;border-radius:50%;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:22px;cursor:pointer;transition:transform 160ms ease,background-color 200ms ease}
-.navbtn:hover{background:#1E1E1E;color:#FFFFFF;border-color:#1E1E1E}
-.navbtn:active{transform:scale(.95)}
+.navbtn{width:56px;height:56px;border-radius:50%;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:22px;cursor:pointer;transition:transform 160ms var(--ease-out),background-color 200ms ease}
 
 /* units */
 .units{padding:150px 0 60px}
@@ -107,11 +103,68 @@ a:hover{opacity:.8}
 .foot-row{border-top:1px solid #D4D4D4;margin-top:70px;padding-top:30px}
 .foot-legal{border-top:1px solid #D4D4D4;margin-top:90px;padding-top:24px;font-size:16px}
 .dock{display:none}
+.pair picture{display:block}
 .foot-nav{font-size:30px;letter-spacing:-.02em;display:grid}
 .foot-nav>:first-child{border-top:0;padding-top:0}
 .foot-nav>:last-child{border-bottom:0}
 
-@media (prefers-reduced-motion:reduce){.px span{animation:none}.box,.svc,.logos img,.dock{transition:none!important}}
+/* ---------- motion ---------- */
+.k{--ease-out:cubic-bezier(.23,1,.32,1);--ease-in-out:cubic-bezier(.77,0,.175,1);--ease-drawer:cubic-bezier(.32,.72,0,1)}
+
+/* press feedback on every pressable block */
+.navbtn:active,.hero-cta:active,.chat:active,.dock.on:active{transform:scale(.97)}
+.hero-cta,.chat{transition:transform 160ms var(--ease-out)}
+.hero-cta svg,.chat svg,.dock svg{transition:transform 200ms var(--ease-out)}
+
+/* hover only where a real pointer hovers */
+@media (hover:hover) and (pointer:fine){
+  a:hover{opacity:.8}
+  .hero-cta:hover,.chat:hover,.dock:hover{opacity:1}
+  .hero-cta:hover svg,.chat:hover svg,.dock:hover svg{transform:translateX(4px)}
+  .logos>div:hover img{opacity:1}
+  .navbtn:hover{background:#1E1E1E;color:#FFFFFF;border-color:#1E1E1E}
+}
+
+/* service panel and process step: short blurred crossfade when they appear */
+.panel,.step{transition:opacity 200ms var(--ease-out),filter 200ms var(--ease-out),transform 200ms var(--ease-out)}
+@starting-style{.panel,.step{opacity:0;filter:blur(2px);transform:translateY(4px)}}
+
+/* scroll reveals: hidden only when JS can reveal them */
+.px span{transition:opacity 500ms var(--ease-out),transform 600ms var(--ease-out);transition-delay:var(--d)}
+[data-reveal]{transition:clip-path 700ms var(--ease-in-out)}
+[data-reveal] img{transition:transform 900ms var(--ease-out)}
+.pair [data-reveal]+[data-reveal]{transition-delay:80ms}
+
+@media (prefers-reduced-motion:no-preference){
+  /* hero: the wordmark rises out from behind the hero's bottom edge, then the copy follows */
+  .hero h1>*{animation:rise 1100ms var(--ease-out) both}
+  .hero h1 small{animation-delay:90ms}
+  .intro .lead,.intro .hero-cta{animation:fade-up 700ms var(--ease-out) both}
+  .intro .lead{animation-delay:150ms}
+  .intro .hero-cta{animation-delay:210ms}
+  @media (scripting:enabled){
+    .px:not(.in) span{opacity:0;transform:scale(.6)}
+    [data-reveal]:not(.in){clip-path:inset(0 0 100% 0)}
+    [data-reveal]:not(.in) img{transform:scale(1.08)}
+  }
+}
+@keyframes rise{from{transform:translateY(100%)}}
+@keyframes fade-up{from{opacity:0;transform:translateY(12px)}}
+@keyframes fade{from{opacity:0}}
+
+/* reduced motion: keep the fades, drop the movement */
+@media (prefers-reduced-motion:reduce){
+  .intro .lead,.intro .hero-cta{animation:fade 400ms ease both}
+  .box,.navbtn,.hero-cta,.chat,.hero-cta svg,.chat svg,.dock svg{transition:none!important}
+  .panel,.step{transition:opacity 200ms ease}
+  @starting-style{.panel,.step{opacity:0;filter:none;transform:none}}
+  .px span{transition:opacity 400ms ease;transition-delay:0ms}
+  [data-reveal]{transition:opacity 500ms ease}
+  @media (scripting:enabled){
+    .px:not(.in) span{opacity:0}
+    [data-reveal]:not(.in){opacity:0}
+  }
+}
 @media (max-width:900px){
   .pad{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
   .inset{margin:0 8px}
@@ -180,8 +233,10 @@ a:hover{opacity:.8}
   .foot-legal{margin-top:48px}
 
   /* thumb-reach WhatsApp bar, only between the hero and the contact block */
-  .dock{display:flex;position:fixed;z-index:5;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));min-height:56px;padding:0 20px;align-items:center;justify-content:space-between;gap:16px;background:var(--ac);color:var(--on);text-decoration:none;font-size:20px;letter-spacing:-.02em;box-shadow:0 12px 32px -12px rgba(9,40,90,.55);transform:translateY(calc(100% + 24px));visibility:hidden;transition:transform 500ms cubic-bezier(.23,1,.32,1),visibility 0s 500ms}
-  .dock.on{transform:none;visibility:visible;transition:transform 500ms cubic-bezier(.23,1,.32,1),visibility 0s}
+  .dock{display:flex;position:fixed;z-index:5;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));min-height:56px;padding:0 20px;align-items:center;justify-content:space-between;gap:16px;background:var(--ac);color:var(--on);text-decoration:none;font-size:20px;letter-spacing:-.02em;box-shadow:0 12px 32px -12px rgba(9,40,90,.55);transform:translateY(calc(100% + 24px));visibility:hidden;transition:transform 200ms var(--ease-out),visibility 0s 200ms}
+  .dock.on{transform:none;visibility:visible;transition:transform 400ms var(--ease-drawer),visibility 0s}
+  .dock.on:active{transition-duration:160ms}
+  @media (prefers-reduced-motion:reduce){.dock{transform:none;opacity:0;transition:opacity 200ms ease,visibility 0s 200ms}.dock.on{opacity:1;transition:opacity 200ms ease,visibility 0s}}
 
   /* 44px tap targets on text links */
   .tap,.hero nav a,.lang a{display:inline-block;padding-block:10px}
@@ -193,5 +248,5 @@ a:hover{opacity:.8}
 @media (pointer:coarse){
   .k a,.k button{-webkit-tap-highlight-color:transparent}
   .k a:active,.svc:active{opacity:.6}
-  .hero-cta:active,.dock:active{opacity:1;transform:scale(.98)}
+  .hero-cta:active,.chat:active,.dock:active{opacity:1}
 }

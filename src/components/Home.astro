@@ -71,8 +71,8 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
       <div class="pad">
         <h2 class="state" style="max-width: 15ch">{t.statement}</h2>
         <div class="two points">
-          <div aria-hidden="true" class="px">
-            {T.map((v, i) => <span style={`background:${fill[v]};animation-delay:${i * 45}ms`}></span>)}
+          <div aria-hidden="true" class="px" data-reveal-group>
+            {T.map((v, i) => <span style={`background:${fill[v]};--d:${i * 45}ms`}></span>)}
           </div>
           <ul class="rows" style="list-style: none; margin: 0; padding: 0; font-size: 26px; letter-spacing: -.02em">
             {t.points.map((p) => <li>{p}</li>)}
@@ -167,7 +167,7 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
         <h2 class="state units-title">{t.units.title}</h2>
         {t.units.items.map((u, i) => (
           <article class="case">
-            <div class="tile" style={i === 3 ? 'background: #1E1E1E' : undefined}>
+            <div class="tile" style={i === 3 ? 'background: #1E1E1E' : undefined} data-reveal={i === 0 || i === 2 ? '' : undefined}>
               {i === 0 && <Picture src={trucks} alt={t.units.alt.trucks} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />}
               {i === 1 && <span class="acc" style="font-size: 150px; letter-spacing: -.06em; line-height: 1">Ads</span>}
               {i === 2 && <Picture src={mpv} alt={t.units.alt.mpv} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />}
@@ -188,8 +188,8 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
           <div>
             <p class="big">{t.units.ship[0]}<br>{t.units.ship[1]}</p>
             <div class="pair">
-              <Picture src={sabang} alt={t.units.alt.sabang} formats={['avif']} fallbackFormat="webp" width={600} widths={[300, 600]} sizes="(max-width: 900px) 50vw, 254px" />
-              <Picture src={tugu} alt={t.units.alt.tugu} formats={['avif']} fallbackFormat="webp" width={600} widths={[300, 600]} sizes="(max-width: 900px) 50vw, 254px" />
+              <Picture src={sabang} alt={t.units.alt.sabang} formats={['avif']} fallbackFormat="webp" width={600} widths={[300, 600]} sizes="(max-width: 900px) 50vw, 254px" pictureAttributes={{ 'data-reveal': '' }} />
+              <Picture src={tugu} alt={t.units.alt.tugu} formats={['avif']} fallbackFormat="webp" width={600} widths={[300, 600]} sizes="(max-width: 900px) 50vw, 254px" pictureAttributes={{ 'data-reveal': '' }} />
             </div>
           </div>
         </div>
@@ -260,15 +260,42 @@ const tileSizes = '(max-width: 900px) 100vw, 513px';
     proc.querySelector('[data-prev]')!.addEventListener('click', () => go(-1));
     proc.querySelector('[data-next]')!.addEventListener('click', () => go(1));
 
-    // Horizontal swipe on the box steps too; vertical drags stay page scroll (touch-action: pan-y).
+    // Drag the card sideways: it follows the finger with growing resistance, and a long drag or a
+    // quick flick changes step. Vertical drags stay page scroll (touch-action: pan-y fires pointercancel).
     const stage = proc.querySelector<HTMLElement>('.stage')!;
-    let x0 = 0, y0 = 0;
-    stage.addEventListener('pointerdown', (e) => { x0 = e.clientX; y0 = e.clientY; });
-    stage.addEventListener('pointerup', (e) => {
-      const dx = e.clientX - x0, dy = e.clientY - y0;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
+    let id: number | null = null, x0 = 0, t0 = 0, dx = 0;
+    const follow = (d: number) => {
+      const r = d / (1 + Math.abs(d) / 240);
+      box.style.transform = `translateX(${r}px) ${steps[at].dataset.tf} rotateY(${r * 0.06}deg)`;
+    };
+    const release = (commit: boolean) => {
+      if (id === null) return;
+      id = null;
+      box.classList.remove('dragging');
+      const v = Math.abs(dx) / (performance.now() - t0);
+      if (commit && (Math.abs(dx) > 80 || (Math.abs(dx) > 12 && v > 0.11))) go(dx < 0 ? 1 : -1);
+      else box.style.transform = steps[at].dataset.tf!;
+    };
+    stage.addEventListener('pointerdown', (e) => {
+      if (id !== null) return; // ignore a second finger mid-drag
+      id = e.pointerId; x0 = e.clientX; t0 = performance.now(); dx = 0;
+      stage.setPointerCapture(id);
+      box.classList.add('dragging');
     });
+    stage.addEventListener('pointermove', (e) => {
+      if (e.pointerId !== id) return;
+      dx = e.clientX - x0;
+      follow(dx);
+    });
+    stage.addEventListener('pointerup', (e) => e.pointerId === id && release(true));
+    stage.addEventListener('pointercancel', (e) => e.pointerId === id && release(false));
   }
+
+  // Scroll reveals, once each: the pixel T assembles, unit photos wipe in from the bottom.
+  const reveal = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach((el) => reveal.observe(el));
 
   // Phone WhatsApp bar: hidden over the hero, the service picker, the contact block and the footer, which carry their own WhatsApp links.
   const dock = document.querySelector<HTMLElement>('[data-dock]');
