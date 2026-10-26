@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { copy } from '../../i18n';
+const { meta } = copy.en;
+---
+<Base lang="en" title={meta.title} description={meta.description}>
+  <Home lang="en" />
+</Base>

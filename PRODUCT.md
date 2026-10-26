@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Delegated: Astro (static output, zero client JS by default), plain CSS with custom properties, self-hosted fonts, deployed as static files on a CDN (Cloudflare Pages or Vercel). Replaces the WordPress (Divi) site at tachi.id and the earlier Next.js rebuild, which was removed on `feature/rework`.
+Delegated: Astro (static output, zero client JS by default), plain CSS with custom properties, self-hosted fonts, deployed as static assets on Cloudflare Workers (`wrangler.jsonc`). Replaces the WordPress (Divi) site at tachi.id and the earlier Next.js rebuild, which was removed on `feature/rework`.
 
 ## Users
 
