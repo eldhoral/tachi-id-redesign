@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import { copy, wa, type Lang } from '../i18n';
+import mark from '../assets/tachi-mark.png';
+
+interface Props {
+  lang: Lang;
+  /** Prefix for in-page anchors: '' on the home page, '/' or '/en/' elsewhere. */
+  home: string;
+  /** WhatsApp message and click key for the footer and phone bar. */
+  waText?: string;
+  unit?: string;
+}
+
+const { lang, home, waText, unit = 'group' } = Astro.props;
+const t = copy[lang];
+---
+<footer class="pad foot">
+  <p aria-hidden="true" class="huge acc lockup"><Image src={mark} alt="" width={290} densities={[1, 2]} /><span>Tachi</span><small style="margin-top: .05em">Group</small></p>
+  <div class="two foot-row">
+    <a href={wa(waText)} class="ul acc tap" style="font-size: 30px; align-self: start" data-wa={`${unit}:footer`}>{t.footer.chat}</a>
+    <nav aria-label={t.nav.footer} class="rows foot-nav">
+      <a href={`${home}#unit`} class="plain">{t.nav.units}</a>
+      <a href={`${home}#layanan`} class="plain">{t.nav.services}</a>
+      <a href={`${home}#klien`} class="plain">{t.nav.clients}</a>
+      <a href={`${home}#kontak`} class="plain">{t.nav.contact}</a>
+    </nav>
+  </div>
+  <div class="two foot-legal">
+    <span>{t.footer.rights}</span>
+  </div>
+</footer>
+
+<a href={wa(waText)} class="dock" data-dock data-wa={`${unit}:dock`}>
+  <span>{t.units.chat}</span>
+  <svg aria-hidden="true" viewBox="0 0 44 24" width="32" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
+</a>
+
+<script>
+  import '../scripts/common';
+</script>

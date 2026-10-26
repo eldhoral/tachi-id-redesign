@@ -1,0 +1,125 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import TopBar from './TopBar.astro';
+import SiteFooter from './SiteFooter.astro';
+import { copy, wa, UNIT_SLUGS, PHONE_DISPLAY, EMAIL, type Lang, type UnitSlug } from '../i18n';
+import { unitPhotos, unitHref, slugOf } from '../unitPhotos';
+
+interface Props { lang: Lang; slug: UnitSlug }
+const { lang, slug } = Astro.props;
+const t = copy[lang];
+const p = t.pages[slug];
+const unit = t.units.items.find((u) => slugOf(u.name) === slug)!;
+const home = lang === 'id' ? '/' : '/en/';
+const other = lang === 'id' ? 'en' : 'id';
+const site = Astro.site!;
+const url = new URL(unitHref(lang, slug), site).href;
+const soon = slug === 'foodworks';
+
+const schema: object[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Tachi Group', item: new URL(home, site).href },
+      { '@type': 'ListItem', position: 2, name: p.name, item: url },
+    ],
+  },
+];
+// No Service markup for a unit that is not operating yet.
+if (!soon) {
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: p.name,
+    description: p.description,
+    url,
+    areaServed: { '@type': 'Country', name: 'Indonesia' },
+    provider: { '@type': 'Organization', name: 'Tachi Group', url: new URL('/', site).href },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: p.servicesTitle || t.unitPage.servicesTitle,
+      itemListElement: p.services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.text } })),
+    },
+  });
+}
+---
+<Base lang={lang} title={p.title} description={p.description} alternates={{ id: unitHref('id', slug), en: unitHref('en', slug) }} schema={schema}>
+  <div class="k">
+    <a class="skip" href="#main">{t.skip}</a>
+
+    <section class="hero unit-hero">
+      <TopBar lang={lang} home={home} alt={unitHref(other, slug)} waText={p.wa} unit={slug} />
+      <div class="pad unit-intro">
+        <div>
+          <nav aria-label={t.unitPage.crumbs} class="crumbs">
+            <a href={home} class="plain">Tachi Group</a> / <span aria-current="page">{p.name}</span>
+          </nav>
+          <h1 class="unit-h1">{p.name}</h1>
+          {soon && <p class="soon-badge">{t.unitPage.soon}</p>}
+          <p class="lead">{p.lead}</p>
+          <a href={wa(p.wa)} class="hero-cta show" data-wa={`${slug}:hero`}>
+            <span>{p.cta}</span>
+            <svg aria-hidden="true" viewBox="0 0 44 24" width="32" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
+          </a>
+        </div>
+        <div class="tile" data-reveal>
+          <Picture src={unitPhotos[slug]} alt={unit.alt} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes="(max-width: 900px) 100vw, 640px" loading="eager" fetchpriority="high" />
+        </div>
+      </div>
+    </section>
+
+    <main id="main">
+      {p.services.length > 0 && (
+        <section class="pad unit-sec">
+          <h2 class="state">{p.servicesTitle || t.unitPage.servicesTitle}</h2>
+          <ul class="rows unit-list">
+            {p.services.map((s) => <li><h3>{s.title}</h3><p>{s.text}</p></li>)}
+          </ul>
+        </section>
+      )}
+
+      {p.reasons.length > 0 && (
+        <section class="inset dark unit-why">
+          <div class="pad">
+            <h2 class="state">{p.whyTitle}</h2>
+            <ul class="rows unit-list">
+              {p.reasons.map((r) => <li><h3>{r.title}</h3><p>{r.text}</p></li>)}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      <section class="pad unit-sec">
+        <h2 class="state">{t.unitPage.othersTitle}</h2>
+        <ul class="rows unit-others">
+          {UNIT_SLUGS.filter((s) => s !== slug).map((s) => {
+            const u = t.units.items.find((x) => slugOf(x.name) === s)!;
+            return (
+              <li>
+                <a href={unitHref(lang, s)} class="plain">
+                  <span class="name">{u.name}<sup>{u.tag}</sup></span>
+                  <svg aria-hidden="true" viewBox="0 0 44 24" width="44" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section id="kontak" class="inset contact">
+        <div class="pad">
+          <h2 class="state" style="font-size: clamp(48px, 6.4vw, 96px); line-height: .98; max-width: 14ch">{p.closing}</h2>
+          <div class="line">
+            <a href={wa(p.wa)} class="ul tap" style="font-size: 32px" data-wa={`${slug}:contact`}>{PHONE_DISPLAY}</a>
+            <a href={`mailto:${EMAIL}`} class="plain tap">{EMAIL}</a>
+            <span>{t.address}</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter lang={lang} home={home} waText={p.wa} unit={slug} />
+  </div>
+</Base>

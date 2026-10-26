@@ -10,4 +10,44 @@
     <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/"/>
   </url>
+  <url>
+    <loc>https://tachi.id/logistics/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/logistics/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/logistics/"/>
+  </url>
+  <url>
+    <loc>https://tachi.id/en/logistics/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/logistics/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/logistics/"/>
+  </url>
+  <url>
+    <loc>https://tachi.id/ads/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/ads/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/ads/"/>
+  </url>
+  <url>
+    <loc>https://tachi.id/en/ads/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/ads/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/ads/"/>
+  </url>
+  <url>
+    <loc>https://tachi.id/garage/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/garage/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/garage/"/>
+  </url>
+  <url>
+    <loc>https://tachi.id/en/garage/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/garage/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/garage/"/>
+  </url>
+  <url>
+    <loc>https://tachi.id/foodworks/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/foodworks/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/foodworks/"/>
+  </url>
+  <url>
+    <loc>https://tachi.id/en/foodworks/</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tachi.id/foodworks/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tachi.id/en/foodworks/"/>
+  </url>
 </urlset>

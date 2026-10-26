@@ -13,9 +13,13 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  /** Paths of this page in each language, for hreflang. */
+  alternates?: { id: string; en: string };
+  /** Extra JSON-LD objects for this page. */
+  schema?: object[];
 }
 
-const { lang, title, description, noindex = false } = Astro.props;
+const { lang, title, description, noindex = false, alternates = { id: '/', en: '/en/' }, schema = [] } = Astro.props;
 const site = Astro.site!;
 const canonical = new URL(Astro.url.pathname, site).href;
 const og = await getImage({ src: ogSource, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
@@ -69,9 +73,9 @@ const fontFaces = [
   <title>{title}</title>
   <meta name="description" content={description}>
   {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
-  {!noindex && <link rel="alternate" hreflang="id" href={new URL('/', site).href}>}
-  {!noindex && <link rel="alternate" hreflang="en" href={new URL('/en/', site).href}>}
-  {!noindex && <link rel="alternate" hreflang="x-default" href={new URL('/', site).href}>}
+  {!noindex && <link rel="alternate" hreflang="id" href={new URL(alternates.id, site).href}>}
+  {!noindex && <link rel="alternate" hreflang="en" href={new URL(alternates.en, site).href}>}
+  {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(alternates.id, site).href}>}
   <meta name="theme-color" content="#1466C8">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/favicon.png">
@@ -88,6 +92,7 @@ const fontFaces = [
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   {!noindex && <script type="application/ld+json" set:html={JSON.stringify(org)} />}
+  {schema.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
   {analyticsToken && <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: analyticsToken })} />}
 </head>
 <body>

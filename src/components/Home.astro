@@ -1,10 +1,6 @@
 ---
 import { Image, Picture } from 'astro:assets';
 import { copy, wa, STEP_TILT, PHONE_DISPLAY, EMAIL, type Lang } from '../i18n';
-import logistics from '../assets/photos/logistics.webp';
-import ads from '../assets/photos/ads.webp';
-import mpv from '../assets/photos/mpv.webp';
-import foodworks from '../assets/photos/foodworks.webp';
 import sabang from '../assets/photos/balohan-sabang.webp';
 import tugu from '../assets/photos/tugu-0km.webp';
 import pertamina from '../assets/clients/pertamina.jpg';
@@ -17,8 +13,9 @@ import kbn from '../assets/clients/kbn.jpg';
 import samudera from '../assets/clients/samudera.jpg';
 import dimCargo from '../assets/clients/dim-cargo.jpg';
 import infinith from '../assets/clients/infinith.png';
-import mark from '../assets/tachi-mark.png';
-import markWhite from '../assets/tachi-mark-white.png';
+import TopBar from './TopBar.astro';
+import SiteFooter from './SiteFooter.astro';
+import { unitPhotos, slugOf as slug, unitHref } from '../unitPhotos';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -34,36 +31,12 @@ const T = [1,1,1,1,1, 0,0,1,0,0, 0,0,1,0,0, 0,0,1,2,3, 0,0,1,0,0, 0,0,1,0,0, 0,0
 const fill = ['transparent', 'var(--ac)', '#0B2E66', '#1E1E1E', '#9CC3F0'];
 
 const tileSizes = '(max-width: 900px) 100vw, 513px';
-// Unit key for click counting: 'Tachi Logistics' -> 'logistics'.
-const slug = (name: string) => name.split(' ')[1].toLowerCase();
-// One photo per unit, in the order of t.units.items. Logistics, Ads and Foodworks are Unsplash
-// (free licence, no credit required): OYtFO_heZ1Y, CGpifH3FjOA, yvzzemH8-J0.
-const unitPhotos = [logistics, ads, mpv, foodworks];
 ---
 <div class="k">
   <a class="skip" href="#main">{t.skip}</a>
 
   <section class="hero" id="top">
-    <header class="pad two">
-      <a href={lang === 'id' ? '/' : '/en/'} class="brand plain">
-        <Image src={markWhite} alt="Tachi Group" height={40} densities={[1, 2, 3]} loading="eager" />
-        <span>{t.slogan}</span>
-      </a>
-      <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap">
-        <nav aria-label={t.nav.label}>
-          <a href="#unit" class="plain">{t.nav.units}</a>
-          <a href="#layanan" class="plain hide-sm">{t.nav.services}</a>
-        </nav>
-        <div class="tools">
-          <span class="lang">
-            {lang === 'id'
-              ? <><span aria-current="page">ID</span> / <a href="/en/" hreflang="en" lang="en" class="plain">EN</a></>
-              : <><a href="/" hreflang="id" lang="id" class="plain">ID</a> / <span aria-current="page">EN</span></>}
-          </span>
-          <a href={wa()} class="ul hide-sm" data-wa="group:nav">{t.nav.cta}</a>
-        </div>
-      </div>
-    </header>
+    <TopBar lang={lang} home="" alt={lang === 'id' ? '/en/' : '/'} />
     <div class="pad two intro">
       <span aria-hidden="true" class="hide-sm"></span>
       <div>
@@ -179,10 +152,10 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
         {t.units.items.map((u, i) => (
           <article class="case">
             <div class="tile" data-reveal>
-              <Picture src={unitPhotos[i]} alt={u.alt} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />
+              <Picture src={unitPhotos[slug(u.name)]} alt={u.alt} formats={['avif']} fallbackFormat="webp" width={1026} widths={[400, 800, 1026]} sizes={tileSizes} />
             </div>
             <div class="body">
-              <h3>{u.name}<sup>{u.tag}</sup></h3>
+              <h3><a href={unitHref(lang, slug(u.name))} class="plain">{u.name}</a><sup>{u.tag}</sup></h3>
               <p>{u.text}</p>
               <a href={wa(t.units.hello(u.name))} class="ul acc tap" data-wa={`${slug(u.name)}:units`}>{u.cta}</a>
             </div>
@@ -224,38 +197,10 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
     </section>
   </main>
 
-  <footer class="pad foot">
-    <p aria-hidden="true" class="huge acc lockup"><Image src={mark} alt="" width={290} densities={[1, 2]} /><span>Tachi</span><small style="margin-top: .05em">Group</small></p>
-    <div class="two foot-row">
-      <a href={wa()} class="ul acc tap" style="font-size: 30px; align-self: start" data-wa="group:footer">{t.footer.chat}</a>
-      <nav aria-label={t.nav.footer} class="rows foot-nav">
-        <a href="#unit" class="plain">{t.nav.units}</a>
-        <a href="#layanan" class="plain">{t.nav.services}</a>
-        <a href="#klien" class="plain">{t.nav.clients}</a>
-        <a href="#kontak" class="plain">{t.nav.contact}</a>
-      </nav>
-    </div>
-    <div class="two foot-legal">
-      <span>{t.footer.rights}</span>
-    </div>
-  </footer>
-
-  <a href={wa()} class="dock" data-dock data-wa="group:dock">
-    <span>{t.units.chat}</span>
-    <svg aria-hidden="true" viewBox="0 0 44 24" width="32" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 12h42M31 1l11 11-11 11"></path></svg>
-  </a>
+  <SiteFooter lang={lang} home="" />
 </div>
 
 <script>
-  // Count WhatsApp clicks (unit + button + language) via the Worker; sendBeacon survives the
-  // navigation to wa.me. Nothing personal is sent.
-  document.addEventListener('click', (e) => {
-    const a = (e.target as Element).closest<HTMLAnchorElement>('a[data-wa]');
-    if (!a) return;
-    const [unit, place] = a.dataset.wa!.split(':');
-    navigator.sendBeacon?.('/api/wa', JSON.stringify({ unit, place, lang: document.documentElement.lang }));
-  });
-
   // Service picker: hover, focus or click shows that service's panel.
   const services = document.querySelector('[data-services]');
   if (services) {
@@ -314,23 +259,6 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
     });
     stage.addEventListener('pointerup', (e) => e.pointerId === id && release(true));
     stage.addEventListener('pointercancel', (e) => e.pointerId === id && release(false));
-  }
-
-  // Scroll reveals, once each: the pixel T assembles, unit photos wipe in from the bottom.
-  const reveal = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target); }
-  }, { rootMargin: '0px 0px -12% 0px' });
-  document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach((el) => reveal.observe(el));
-
-  // Phone WhatsApp bar: hidden over the hero, the service picker, the contact block and the footer, which carry their own WhatsApp links.
-  const dock = document.querySelector<HTMLElement>('[data-dock]');
-  if (dock) {
-    const seen = new Set<Element>();
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) e.isIntersecting ? seen.add(e.target) : seen.delete(e.target);
-      dock.classList.toggle('on', seen.size === 0);
-    });
-    for (const sel of ['.hero', '#layanan', '#kontak', 'footer']) io.observe(document.querySelector(sel)!);
   }
 
   // Video band: plays only while on screen, never on reduced motion or data saver unless the

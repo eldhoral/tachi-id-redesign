@@ -1,12 +1,9 @@
-# Old WordPress URLs (www.tachi.id sitemap, October 2026) -> sections of the new page.
+# Old WordPress URLs (www.tachi.id sitemap, October 2026) -> the matching new page or section.
+# /ads/ and /foodworks/ need no rule: the new unit pages live at the same paths.
 # www -> apex is a Cloudflare Redirect Rule (see README), because static assets are
 # served before the Worker runs.
-/logistic       /#unit     301
-/logistic/      /#unit     301
-/ads            /#unit     301
-/ads/           /#unit     301
-/foodworks      /#unit     301
-/foodworks/     /#unit     301
+/logistic       /logistics/  301
+/logistic/      /logistics/  301
 /grupbisnis     /#unit     301
 /grupbisnis/    /#unit     301
 /klien-kami     /#klien    301

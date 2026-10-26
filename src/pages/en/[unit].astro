@@ -1,0 +1,8 @@
+---
+import UnitPage from '../../components/UnitPage.astro';
+import { UNIT_SLUGS, type UnitSlug } from '../../i18n';
+
+export const getStaticPaths = () => UNIT_SLUGS.map((unit) => ({ params: { unit } }));
+const unit = Astro.params.unit as UnitSlug;
+---
+<UnitPage lang="en" slug={unit} />

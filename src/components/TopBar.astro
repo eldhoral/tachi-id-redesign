@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import { copy, wa, type Lang } from '../i18n';
+import markWhite from '../assets/tachi-mark-white.png';
+
+interface Props {
+  lang: Lang;
+  /** Prefix for in-page anchors: '' on the home page, '/' or '/en/' elsewhere. */
+  home: string;
+  /** The same page in the other language. */
+  alt: string;
+  /** WhatsApp message and click key for the header button. */
+  waText?: string;
+  unit?: string;
+}
+
+const { lang, home, alt, waText, unit = 'group' } = Astro.props;
+const t = copy[lang];
+const homeHref = lang === 'id' ? '/' : '/en/';
+---
+<header class="pad two">
+  <a href={homeHref} class="brand plain">
+    <Image src={markWhite} alt="Tachi Group" height={40} densities={[1, 2, 3]} loading="eager" />
+    <span>{t.slogan}</span>
+  </a>
+  <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+    <nav aria-label={t.nav.label}>
+      <a href={`${home}#unit`} class="plain">{t.nav.units}</a>
+      <a href={`${home}#layanan`} class="plain hide-sm">{t.nav.services}</a>
+    </nav>
+    <div class="tools">
+      <span class="lang">
+        {lang === 'id'
+          ? <><span aria-current="page">ID</span> / <a href={alt} hreflang="en" lang="en" class="plain">EN</a></>
+          : <><a href={alt} hreflang="id" lang="id" class="plain">ID</a> / <span aria-current="page">EN</span></>}
+      </span>
+      <a href={wa(waText)} class="ul hide-sm" data-wa={`${unit}:nav`}>{t.nav.cta}</a>
+    </div>
+  </div>
+</header>
