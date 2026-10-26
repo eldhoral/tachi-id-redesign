@@ -90,6 +90,7 @@ const id = {
     chat: 'Chat via WhatsApp',
     ship: ['Kirim dari Sabang', 'sampai Merauke'],
   },
+  reel: { label: 'Video truk di jalan tol Indonesia, dengan rute dari Sabang sampai Merauke', play: 'Putar video', pause: 'Jeda video' },
   cta: 'Ceritakan kebutuhan Anda. Tim yang tepat akan membalas.',
   address: 'Jl. Perum Villa Indah Permai Blok E6 No.33, Kota Bekasi 17121',
   footer: {
@@ -177,6 +178,7 @@ const en: typeof id = {
     chat: 'Chat on WhatsApp',
     ship: ['Ship from Sabang', 'to Merauke'],
   },
+  reel: { label: 'Video of trucks on Indonesian toll roads, with a route from Sabang to Merauke', play: 'Play video', pause: 'Pause video' },
   cta: 'Tell us what you need. The right team will reply.',
   address: 'Jl. Perum Villa Indah Permai Blok E6 No.33, Kota Bekasi 17121',
   footer: {

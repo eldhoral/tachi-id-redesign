@@ -202,6 +202,14 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
       </div>
     </section>
 
+    <section class="inset reel" aria-label={t.reel.label} data-reel>
+      <video muted playsinline loop preload="none" data-poster="/video/reel-poster.webp" aria-hidden="true">
+        <source src="/video/reel.webm" type="video/webm" />
+        <source src="/video/reel.mp4" type="video/mp4" />
+      </video>
+      <button type="button" class="reel-toggle" data-reel-toggle data-play={t.reel.play} data-pause={t.reel.pause}>{t.reel.play}</button>
+    </section>
+
     <section id="kontak" class="inset contact">
       <div class="pad">
         <h2 class="state" style="font-size: clamp(48px, 6.4vw, 96px); line-height: .98; max-width: 14ch">{t.cta}</h2>
@@ -312,5 +320,31 @@ const unitPhotos = [logistics, ads, mpv, foodworks];
       dock.classList.toggle('on', seen.size === 0);
     });
     for (const sel of ['.hero', '#layanan', '#kontak', 'footer']) io.observe(document.querySelector(sel)!);
+  }
+
+  // Video band: plays only while on screen, never on reduced motion or data saver unless the
+  // visitor presses play, and always has a pause button (moving content must be stoppable).
+  const reel = document.querySelector<HTMLElement>('[data-reel]');
+  if (reel) {
+    const video = reel.querySelector('video')!;
+    const toggle = reel.querySelector<HTMLButtonElement>('[data-reel-toggle]')!;
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    let wanted = !(matchMedia('(prefers-reduced-motion: reduce)').matches || saveData);
+    const label = () => (toggle.textContent = video.paused ? toggle.dataset.play! : toggle.dataset.pause!);
+    video.addEventListener('play', label);
+    video.addEventListener('pause', label);
+    toggle.addEventListener('click', () => {
+      wanted = video.paused;
+      if (wanted) video.play().catch(() => {});
+      else video.pause();
+    });
+    // Poster too waits until the band is near, so the first screen loads nothing of the video.
+    new IntersectionObserver(([e], obs) => {
+      if (e.isIntersecting) { video.poster = video.dataset.poster!; obs.disconnect(); }
+    }, { rootMargin: '600px 0px' }).observe(reel);
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && wanted) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.25 }).observe(reel);
   }
 </script>

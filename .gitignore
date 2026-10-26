@@ -12,3 +12,6 @@ dist/
 .claude/
 .taste-skill/
 skills-lock.json
+
+# Remotion project (video/): renders and its own deps
+video/out/
