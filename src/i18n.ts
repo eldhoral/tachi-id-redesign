@@ -25,7 +25,7 @@ const id = {
   skip: 'Langsung ke konten',
   slogan: 'Stronger together',
   nav: { label: 'Utama', footer: 'Bawah', units: 'Unit bisnis', services: 'Layanan', clients: 'Klien', contact: 'Kontak', cta: 'Chat WhatsApp' },
-  heroLead: 'Kirim barang ke seluruh Indonesia, bangun merek, atau cari mobil bekas yang sudah diperiksa. Semua lewat satu grup dari Bekasi.',
+  heroLead: 'Logistik, periklanan, dan mobil bekas dari satu grup. Satu pesan WhatsApp, tim yang tepat membalas.',
   statement: 'Satu kontak untuk logistik, periklanan, dan kendaraan.',
   points: [
     'Satu nomor WhatsApp untuk semua unit',
@@ -114,7 +114,7 @@ const en: typeof id = {
   skip: 'Skip to content',
   slogan: 'Stronger together',
   nav: { label: 'Main', footer: 'Footer', units: 'Business units', services: 'Services', clients: 'Clients', contact: 'Contact', cta: 'Chat on WhatsApp' },
-  heroLead: 'Ship goods anywhere in Indonesia, build your brand, or buy an inspected used car. All through one group based in Bekasi.',
+  heroLead: 'Logistics, advertising and used cars from one group. One WhatsApp message, and the right team replies.',
   statement: 'One contact for logistics, advertising and vehicles.',
   points: [
     'One WhatsApp number for every unit',
